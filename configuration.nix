@@ -61,10 +61,13 @@ in
 
   networking.networkmanager = {
     enable = true;
-    # wifi.powersave = false; # I don't know what this does, default is null? Is that false
+    # wifi.powersave = true; # I don't know what this does, default is null? Is that false
+    # powersave only works with the nl blab blah thing and not w ith wext I think
     wifi.scanRandMacAddress = false; # I hope this isnt' bad.
     logLevel = "DEBUG";
+    extraConfig = "[main]\nwifi-wext-only=true";
   };
+
   # networking.networkmanager.unmanaged = [
   #   "*"
   # ];
