@@ -66,6 +66,7 @@ in
     wifi.scanRandMacAddress = false; # I hope this isnt' bad.
     logLevel = "DEBUG";
     extraConfig = "[main]\nwifi-wext-only=true";
+    dhcp = "dhcpcd"; # hopefully this fixes some problems
   };
 
   # networking.networkmanager.unmanaged = [
@@ -184,6 +185,8 @@ in
     ripgrep
     pandoc
     vscode
+    exa
+    zoxide
 
     # c c++
     glslang
@@ -231,6 +234,7 @@ in
     ruby
 
     # commandline programs
+
     htop
     metamath
     neofetch
@@ -307,7 +311,7 @@ in
   # networking.firewall.enable = false;
 
   system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
+  system.autoUpgrade.allowReboot = false; # reboot is kind of annoying.
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
