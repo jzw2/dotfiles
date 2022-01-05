@@ -1,5 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
+#
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
@@ -23,9 +24,9 @@ in
     ];
 
   nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
+    #(import (builtins.fetchTarball {
+      #url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    #}))
   ];
   # fonts or something idk
   fonts.fonts = with pkgs; [
@@ -40,48 +41,35 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # networking.wireless.iwd.enable = true;
-  # networking.networkmanager.wifi.backend = "iwd";
-  #
-
-
-
-
-  # networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
 
+  networking = {
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp1s0.useDHCP = false;
+    useDHCP = false;
+    dhcpcd.enable = true;
+    #  networking.interfaces.enp1s0.useDHCP = false;
+    interfaces.eth0.useDHCP = true;
 
-  networking.networkmanager = {
-    enable = true;
-    # wifi.powersave = true; # I don't know what this does, default is null? Is that false
-    # powersave only works with the nl blab blah thing and not w ith wext I think
-    wifi.scanRandMacAddress = false; # I hope this isnt' bad.
-    logLevel = "DEBUG";
-    extraConfig = "[main]\nwifi-wext-only=true";
-    dhcp = "dhcpcd"; # hopefully this fixes some problems
+    networkmanager = {
+      enable = true;
+      # wifi.powersave = true; # I don't know what this does, default is null? Is that false
+      # powersave only works with the nl blab blah thing and not w ith wext I think
+      wifi.scanRandMacAddress = false; # I hope this isnt' bad.
+      logLevel = "DEBUG";
+      # extraConfig = "wifi-wext-only=true"; # i don't know why this doesn't  work
+      dhcp = "dhclient"; # hopefully this fixes some problems
+      packages = [pkgs.dhcpcd];
+    };
   };
 
   # networking.networkmanager.unmanaged = [
   #   "*"
   # ];
 
-  # networking.wireless = {
-  #   # enable = true;
-  #   userControlled.enable = true;
-  #   networks = {
-  #     NETGEAR45 = {
-  #       psk = "!LoveGod"; # pls don't look at this
-  #     };
-  #   };
-  # };
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -102,6 +90,7 @@ in
   # services.xserver.desktopManager.gnome3.enable = true;
   #
   services = {
+    # dhcpd4.enable = true;
     emacs.enable = true;
     gnome.gnome-keyring.enable = true;
     gnome.games.enable = true;
@@ -187,6 +176,7 @@ in
     vscode
     exa
     zoxide
+    dhcpcd # I don't know why I have to enable it here
 
     # c c++
     glslang
