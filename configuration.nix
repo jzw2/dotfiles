@@ -29,14 +29,27 @@ in
     #}))
   ];
   # fonts or something idk
-  fonts.fonts = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    fira-code
-    font-awesome-ttf
-    nerdfonts
-  ];
+
+  fonts = {
+    enableDefaultFonts = true;
+    fonts = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      fira-code
+      font-awesome-ttf
+      babelstone-han # yay I like archaick characters
+      # nerdfonts # this just makes updating really slow
+    ];
+
+    fontconfig = {
+      defaultFonts = {
+        serif = [ "Noto Serif" ];
+        sansSerif = [ "Noto Sans" "Noto Sans CJK SC" ];
+        monospace = [ "Noto Mono" ];
+      };
+    };
+  };
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -177,6 +190,7 @@ in
     exa
     zoxide
     dhcpcd # I don't know why I have to enable it here
+    openssl
 
     # c c++
     glslang
