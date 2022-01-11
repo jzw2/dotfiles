@@ -65,7 +65,8 @@ in
     useDHCP = false;
     dhcpcd.enable = true;
     #  networking.interfaces.enp1s0.useDHCP = false;
-    interfaces.eth0.useDHCP = true;
+    interfaces.eth0.useDHCP = false;
+    interfaces.wlan0.useDHCP = false; # uh mayby conflict with ntework manager?
 
     networkmanager = {
       enable = true;
@@ -74,8 +75,10 @@ in
       wifi.scanRandMacAddress = false; # I hope this isnt' bad.
       logLevel = "DEBUG";
       # extraConfig = "wifi-wext-only=true"; # i don't know why this doesn't  work
-      dhcp = "dhclient"; # hopefully this fixes some problems
-      packages = [pkgs.dhcpcd];
+      # dhcp = "dhclient"; # hopefully this fixes some problems
+      packages = [
+        # pkgs.dhcpcd
+      ];
     };
   };
 
@@ -189,7 +192,7 @@ in
     vscode
     exa
     zoxide
-    dhcpcd # I don't know why I have to enable it here
+    # dhcpcd # I don't know why I have to enable it here
     openssl
 
     # c c++
