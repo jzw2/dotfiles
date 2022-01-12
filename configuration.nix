@@ -180,7 +180,7 @@ in
     guake
     wget
     vim
-    emacs
+    # emacs
     git
     fd
     gh
@@ -291,6 +291,10 @@ in
   programs.fish.enable = true;
   programs.steam.enable = true;
   nixpkgs.config.allowUnfree = true;
+
+
+  virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true; # slow to compile
 
   nix.gc = {
     automatic = true;
