@@ -63,7 +63,7 @@ in
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
     useDHCP = false;
-    dhcpcd.enable = true;
+    dhcpcd.enable = false;
     #  networking.interfaces.enp1s0.useDHCP = false;
     interfaces.eth0.useDHCP = false;
     interfaces.wlan0.useDHCP = false; # uh mayby conflict with ntework manager?
@@ -176,31 +176,31 @@ in
   environment.systemPackages = with pkgs; [
     # development
 
-    alacritty
-    guake
-    wget
-    vim
+    # dhcpcd # I don't know why I have to enable it here
     # emacs
-    git
+    # tree
+    alacritty
+    exa
     fd
     gh
-    sqlite
-    # tree
-    unzip
-    ripgrep
-    pandoc
-    vscode
-    exa
-    zoxide
-    # dhcpcd # I don't know why I have to enable it here
+    git
+    guake
     openssl
+    pandoc
+    ripgrep
+    sqlite
+    unzip
+    vim
+    vscode
+    wget
+    zoxide
 
     # c c++
-    glslang
-    rtags
     cmake
-    gnumake
     gcc
+    glslang
+    gnumake
+    rtags
 
 
     # python
@@ -242,13 +242,15 @@ in
 
     # commandline programs
 
+    ccze # log colorizer
+    graphviz
     htop
+    iw
+    maude
     metamath
     neofetch
-    graphviz
-    wl-clipboard
-    maude
     tmux
+    wl-clipboard
 
     # swaglyrics
     texlive.combined.scheme-full
@@ -257,20 +259,25 @@ in
 
 
     # applications
-    # anki
+    # anki # this anki is out of date
+    # adobe-reader # for some reason this is "dangerous"
     anki-bin
+    audacity
+    bitwarden
     brave
-    firefox
     discord
-    runelite
+    firefox
+    lutris
+    lyrebird
     minecraft
+    mpv
+    runelite
     slack
     spotify
-    zoom-us
-    lutris
     spotify-tui
     spotifyd
-    mpv
+    thunderbird
+    zoom-us
 
     #gnome
     gnome.gnome-shell-extensions
