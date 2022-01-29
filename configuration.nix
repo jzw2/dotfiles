@@ -21,12 +21,15 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./cachix.nix
     ];
 
   nixpkgs.overlays = [
-    #(import (builtins.fetchTarball {
-      #url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    #}))
+    (import (builtins.fetchGit {
+      url = "https://github.com/nix-community/emacs-overlay.git";
+      ref = "master";
+      rev = "c98ad03b2201e17f590b6a3ec84a1c5e4722eb09";
+    }))
   ];
   # fonts or something idk
 
@@ -108,6 +111,7 @@ in
   services = {
     # dhcpd4.enable = true;
     emacs.enable = true;
+    pantheon.contractor.enable = true;
     gnome.gnome-keyring.enable = true;
     gnome.games.enable = true;
     upower.enable = true;
@@ -115,7 +119,7 @@ in
     dbus = {
       enable = true;
       # socketActivated = true;
-      packages = [ pkgs.gnome3.dconf ];
+      packages = [ pkgs.dconf ];
     };
 
     xserver = {
@@ -132,9 +136,12 @@ in
         ];
       };
 
-      desktopManager.gnome.enable = true;
-      displayManager.gdm.enable = true;
+      # desktopManager.gnome.enable = true;
+      desktopManager.pantheon.enable = true;
+      # displayManager.gdm.enable = true;
+      # displayManager.gdm.nvidiaWayland = false;
       layout = "dvorak";
+      videoDrivers = [ "nvidia" ];
     };
   };
 
@@ -149,7 +156,9 @@ in
 
 
   # emacs or sometheing
-  services.emacs.package = pkgs.emacs;
+  #
+  # options are emacsGit, emacsUnstable, emacsGcc, emacs-nox
+  services.emacs.package = pkgs.emacsPgtk;
 
   # Configure keymap in X11
   # services.xserver.xkbOptions = "eurosign:e";
@@ -161,6 +170,9 @@ in
   sound.enable = true;
   sound.mediaKeys.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.nvidiaSettings = true;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -292,11 +304,16 @@ in
 
     capitaine-cursors
 
+    # pantheon
+    pantheon.switchboard
+    pantheon.wingpanel
+
 
   ];
 
   programs.fish.enable = true;
   programs.steam.enable = true;
+  programs.pantheon-tweaks.enable = true;
   nixpkgs.config.allowUnfree = true;
 
 
