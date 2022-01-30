@@ -126,6 +126,9 @@ in
       enable = true;
       # startDbusSession = true;
       # displayManager.defaultSession = "none+xmonad";
+      displayManager.setupCommands = ''
+  ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-0 --auto --output DP-1 --auto --right-of HDMI-0
+'';
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
@@ -135,6 +138,7 @@ in
           hpkgs.xmonad                                       # Install xmonad itself.
         ];
       };
+      windowManager.leftwm.enable = true;
 
       # desktopManager.gnome.enable = true;
       desktopManager.pantheon.enable = true;
@@ -158,6 +162,7 @@ in
   # emacs or sometheing
   #
   # options are emacsGit, emacsUnstable, emacsGcc, emacs-nox
+  # use emacsPgtk stands for pure gtk
   services.emacs.package = pkgs.emacsPgtk;
 
   # Configure keymap in X11
