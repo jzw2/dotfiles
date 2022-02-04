@@ -36,13 +36,20 @@ in
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
+      siji # for bars or whatever
+      jetbrains-mono
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
       fira-code
       font-awesome-ttf
+
       babelstone-han # yay I like archaick characters
-      # nerdfonts # this just makes updating really slow
+      (
+        nerdfonts.override {
+          fonts = ["JetBrainsMono"];
+        }
+      )
     ];
 
     fontconfig = {
@@ -76,7 +83,7 @@ in
       # wifi.powersave = true; # I don't know what this does, default is null? Is that false
       # powersave only works with the nl blab blah thing and not w ith wext I think
       wifi.scanRandMacAddress = false; # I hope this isnt' bad.
-      logLevel = "DEBUG";
+      # logLevel = "DEBUG";
       # extraConfig = "wifi-wext-only=true"; # i don't know why this doesn't  work
       # dhcp = "dhclient"; # hopefully this fixes some problems
       packages = [
@@ -126,9 +133,9 @@ in
       enable = true;
       # startDbusSession = true;
       # displayManager.defaultSession = "none+xmonad";
-      displayManager.setupCommands = ''
-  ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-0 --auto --output DP-1 --auto --right-of HDMI-0
-'';
+#       displayManager.setupCommands = ''
+#         ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-0 --auto --primary --output DP-1 --auto --right-of HDMI-0
+# '';
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
@@ -141,12 +148,32 @@ in
       windowManager.leftwm.enable = true;
 
       # desktopManager.gnome.enable = true;
-      desktopManager.pantheon.enable = true;
+      # desktopManager.pantheon.enable = true;
       # displayManager.gdm.enable = true;
       # displayManager.gdm.nvidiaWayland = false;
       layout = "dvorak";
       videoDrivers = [ "nvidia" ];
+      config = ''
+Section "Monitor"
+    Identifier  "HDMI-0"
+    Option      "Primary" "true"
+EndSection
+
+Section "Monitor"
+    Identifier  "DP-1"
+    Option      "RightOf" "HDMI-0"
+EndSection
+'';
     };
+
+    logind.extraConfig = ''
+    IdleAction=hybrid-sleep
+    IdleActionSec=30min
+    HandlePowerKey=ignore
+    HandleRebootKey=ignore
+'';
+
+
   };
 
   i18n.inputMethod = {
