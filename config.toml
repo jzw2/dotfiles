@@ -8,7 +8,7 @@ scratchpad = [
     { name = "Alacritty", value = "alacritty", x = 500, y = 390, height = 800, width = 1500 },
 ]
 disable_current_tag_swap = true # this makes me so confused
-focus_behaviour = "ClickTo"
+focus_behaviour = "Sloppy"
 focus_new_windows = true
 window_rules = [
   # windows whose WM_CLASS is "Navigator" will be spawn on tag 2 (by position, 1-indexed)

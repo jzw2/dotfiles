@@ -30,6 +30,27 @@ in
       ref = "master";
       rev = "c98ad03b2201e17f590b6a3ec84a1c5e4722eb09";
     }))
+    # (
+    #   self: super:
+    #   {
+    #     version = "0.3.0";
+    #     leftwm = super.leftwm.overrideAttrs (old: rec {
+    #       name = "leftwm";
+    #       src = super.fetchFromGitHub {
+    #         owner = "leftwm";
+    #         repo = "leftwm";
+    #         rev = "661e2b99290b05a3b9a77da78765af05d979f55f";
+    #         sha256 = "sha256-v77pEJwMzJrwUDIaX8mPY2GK/N5jUwkMqGXZcatfG5E=";
+    #       };
+
+    #       cargoDeps = old.cargoDeps.overrideAttrs (super.lib.const {
+    #             name = "${name}-vendor.tar.gz";
+    #         inherit src;
+    #         outputHash = "sha256-ucPSgTKBFMDOao45nPv5PJVmiJ71UBYvDg8alX8diLk=";
+    #       });
+    #     });
+    #   }
+    # )
   ];
   # fonts or something idk
 
@@ -69,9 +90,9 @@ in
   time.timeZone = "America/Chicago";
 
   networking = {
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
+    # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+    # Per-interface useDHCP will be mandatory in the future, so this generated config
+    # replicates the default behaviour.
     useDHCP = false;
     dhcpcd.enable = false;
     #  networking.interfaces.enp1s0.useDHCP = false;
@@ -112,7 +133,7 @@ in
 
 
   # Enable the GNOME 3 Desktop Environment.
-   # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome3.enable = true;
   #
   services = {
@@ -133,9 +154,9 @@ in
       enable = true;
       # startDbusSession = true;
       # displayManager.defaultSession = "none+xmonad";
-#       displayManager.setupCommands = ''
-#         ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-0 --auto --primary --output DP-1 --auto --right-of HDMI-0
-# '';
+      #       displayManager.setupCommands = ''
+      #         ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-0 --auto --primary --output DP-1 --auto --right-of HDMI-0
+      # '';
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
