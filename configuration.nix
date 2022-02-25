@@ -10,7 +10,7 @@ let
     pyflakes
     pandas
     requests
-    lark-parser
+    # lark-parser
     pyyaml
     schema
     z3
@@ -30,27 +30,27 @@ in
       ref = "master";
       rev = "c98ad03b2201e17f590b6a3ec84a1c5e4722eb09";
     }))
-    # (
-    #   self: super:
-    #   {
-    #     version = "0.3.0";
-    #     leftwm = super.leftwm.overrideAttrs (old: rec {
-    #       name = "leftwm";
-    #       src = super.fetchFromGitHub {
-    #         owner = "leftwm";
-    #         repo = "leftwm";
-    #         rev = "661e2b99290b05a3b9a77da78765af05d979f55f";
-    #         sha256 = "sha256-v77pEJwMzJrwUDIaX8mPY2GK/N5jUwkMqGXZcatfG5E=";
-    #       };
+    (
+      self: super:
+      {
+        version = "0.3.0";
+        leftwm = super.leftwm.overrideAttrs (old: rec {
+          name = "leftwm";
+          src = super.fetchFromGitHub {
+            owner = "leftwm";
+            repo = "leftwm";
+            rev = "bc5d7df6ae27ea398b9395f2909b8ee132c031b8";
+            sha256 = "sha256-vzA+5ijIJ5HywoftNONAOcPWTCVWiKzi0PCu2q6913E=";
+          };
 
-    #       cargoDeps = old.cargoDeps.overrideAttrs (super.lib.const {
-    #             name = "${name}-vendor.tar.gz";
-    #         inherit src;
-    #         outputHash = "sha256-ucPSgTKBFMDOao45nPv5PJVmiJ71UBYvDg8alX8diLk=";
-    #       });
-    #     });
-    #   }
-    # )
+          cargoDeps = old.cargoDeps.overrideAttrs (super.lib.const {
+                name = "${name}-vendor.tar.gz";
+            inherit src;
+            outputHash = "sha256-ucPSgTKBFMDOao45nPv5PJVmiJ71UBYvDg8alX8diLk=";
+          });
+        });
+      }
+    )
   ];
   # fonts or something idk
 
@@ -190,7 +190,7 @@ EndSection
     logind.extraConfig = ''
     IdleAction=hybrid-sleep
     IdleActionSec=30min
-    HandlePowerKey=ignore
+    HandlePowerKey=suspend
     HandleRebootKey=ignore
 '';
 
@@ -238,12 +238,9 @@ EndSection
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    # development
+  environment.systemPackages = with pkgs;
+    let development = [
 
-    # dhcpcd # I don't know why I have to enable it here
-    # emacs
-    # tree
     alacritty
     exa
     fd
@@ -259,6 +256,51 @@ EndSection
     vscode
     wget
     zoxide
+        ]; in
+    development ++ [
+    # development
+
+    # dhcpcd # I don't know why I have to enable it here
+    # emacs
+    # tree
+
+
+
+    # working with Krist
+#     (
+#       flutter.overrideAttrs  (old:
+#         let channel = "stable";
+#             version = "2.2.2";
+#           filename = "flutter_linux_${version}-${channel}.tar.xz";
+#         in
+#                                    rec {
+#                                      inherit version;
+#                                      name = "customflutter-version";
+
+#  src = fetchurl {
+#       url = "https://storage.googleapis.com/flutter_infra_release/releases/${channel}/linux/${filename}";
+#       # sha256 = "sha256-0000000000000000000000000000000000000000000=";
+# sha256 = "sha256-2h68WXVjtdPkbY/Vu1BcrmRUQ8G2U9e0++18CD9NSYo=";
+#     };
+#                                    })
+#     )
+#
+#     flutter.override { pname = "oldflutter"; version = "2.2.2";
+
+#  src =
+
+#         let channel = "stable";
+#             version = "2.2.2";
+#           filename = "flutter_linux_${version}-${channel}.tar.xz"; in
+#    fetchurl {
+#       url = "https://storage.googleapis.com/flutter_infra_release/releases/${channel}/linux/${filename}";
+#       # sha256 = "sha256-0000000000000000000000000000000000000000000=";
+# sha256 = "sha256-2h68WXVjtdPkbY/Vu1BcrmRUQ8G2U9e0++18CD9NSYo=";
+#     };
+#                      }
+    # android-tools
+
+
 
     # c c++
     cmake
@@ -345,22 +387,35 @@ EndSection
     zoom-us
 
     #gnome
-    gnome.gnome-shell-extensions
-    gnome.gnome-tweaks
+    # gnome.gnome-shell-extensions
+    # gnome.gnome-tweaks
     whitesur-gtk-theme
     whitesur-icon-theme
-    gnomeExtensions.dash-to-dock
-    gnomeExtensions.lyrics-finder
-    gnomeExtensions.soft-brightness
-    gnomeExtensions.material-shell
+    # gnomeExtensions.dash-to-dock
+    # gnomeExtensions.lyrics-finder
+    # gnomeExtensions.soft-brightness
+    # gnomeExtensions.material-shell
     # gnomeExtensions.pop-shell
 
     capitaine-cursors
 
     # pantheon
-    pantheon.switchboard
-    pantheon.wingpanel
+    # pantheon.switchboard
+    # pantheon.wingpanel
+    #
+    #
 
+    # No window manager mode
+    feh
+    picom
+    rofi
+    wmctrl
+    polybarFull
+
+
+    coq
+    isabelle
+    lean
 
   ];
 
@@ -371,13 +426,19 @@ EndSection
 
 
   virtualisation.virtualbox.host.enable = true;
+  virtualisation.docker.enable = true;
   # virtualisation.virtualbox.host.enableExtensionPack = true; # slow to compile
-
-  nix.gc = {
+  nix = {
+    package = pkgs.nixUnstable; # or versioned attributes like nix_2_4
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
+   };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

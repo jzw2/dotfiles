@@ -1,11 +1,11 @@
 modkey = "Mod4"
 mousekey = "Mod4"
 workspaces = []
-tags = ["Blah", "Browser", "Editor", "Code", "Sugma", "Somebody", "Once", "Told me", "The world was gonna roll me"]
+tags = ["Blah", "Browser", "Editor", "Code", "Sugma" ]
 layouts = ["MainAndVertStack", "MainAndDeck", "Monocle"]
 layout_mode = "Tag"
 scratchpad = [
-    { name = "Alacritty", value = "alacritty", x = 500, y = 390, height = 800, width = 1500 },
+    { name = "Alacritty", value = "alacritty", x = 100, y = 100, height = 900, width = 1300 },
 ]
 disable_current_tag_swap = true # this makes me so confused
 focus_behaviour = "Sloppy"
@@ -269,7 +269,7 @@ key = "Control_R"
 # alt tab or something
 [[keybind]]
 command = "Execute"
-value = "rofi -show window"
+value = "rofi -show window -kb-accept-alt \"Shift+Return\""
 modifier = ["Mod1"]
 key = "Tab"
 # stole from some guy
