@@ -6,23 +6,22 @@
 { config, pkgs, ... }:
 with pkgs;
 let
-  my-python-packages = python-packages: with python-packages; [
-    pyflakes
-    pandas
-    requests
-    # lark-parser
-    pyyaml
-    schema
-    z3
-  ];
-  python-with-my-packages = python3.withPackages my-python-packages;
-in
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./cachix.nix
+  my-python-packages = python-packages:
+    with python-packages; [
+      pyflakes
+      pandas
+      requests
+      # lark-parser
+      pyyaml
+      schema
+      z3
     ];
+  python-with-my-packages = python3.withPackages my-python-packages;
+in {
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./cachix.nix
+  ];
 
   nixpkgs.overlays = [
     (import (builtins.fetchGit {
@@ -30,27 +29,24 @@ in
       ref = "master";
       rev = "c98ad03b2201e17f590b6a3ec84a1c5e4722eb09";
     }))
-    (
-      self: super:
-      {
-        version = "0.3.0";
-        leftwm = super.leftwm.overrideAttrs (old: rec {
-          name = "leftwm";
-          src = super.fetchFromGitHub {
-            owner = "leftwm";
-            repo = "leftwm";
-            rev = "bc5d7df6ae27ea398b9395f2909b8ee132c031b8";
-            sha256 = "sha256-vzA+5ijIJ5HywoftNONAOcPWTCVWiKzi0PCu2q6913E=";
-          };
+    (self: super: {
+      version = "0.3.0";
+      leftwm = super.leftwm.overrideAttrs (old: rec {
+        name = "leftwm";
+        src = super.fetchFromGitHub {
+          owner = "leftwm";
+          repo = "leftwm";
+          rev = "bc5d7df6ae27ea398b9395f2909b8ee132c031b8";
+          sha256 = "sha256-vzA+5ijIJ5HywoftNONAOcPWTCVWiKzi0PCu2q6913E=";
+        };
 
-          cargoDeps = old.cargoDeps.overrideAttrs (super.lib.const {
-                name = "${name}-vendor.tar.gz";
-            inherit src;
-            outputHash = "sha256-ucPSgTKBFMDOao45nPv5PJVmiJ71UBYvDg8alX8diLk=";
-          });
+        cargoDeps = old.cargoDeps.overrideAttrs (super.lib.const {
+          name = "${name}-vendor.tar.gz";
+          inherit src;
+          outputHash = "sha256-ucPSgTKBFMDOao45nPv5PJVmiJ71UBYvDg8alX8diLk=";
         });
-      }
-    )
+      });
+    })
   ];
   # fonts or something idk
 
@@ -66,11 +62,7 @@ in
       font-awesome-ttf
 
       babelstone-han # yay I like archaick characters
-      (
-        nerdfonts.override {
-          fonts = ["JetBrainsMono"];
-        }
-      )
+      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
     fontconfig = {
@@ -84,7 +76,6 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
@@ -117,7 +108,6 @@ in
   #   "*"
   # ];
 
-
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -130,7 +120,6 @@ in
   # };
 
   # Enable the X11 windowing system.
-
 
   # Enable the GNOME 3 Desktop Environment.
   # services.xserver.displayManager.gdm.enable = true;
@@ -160,11 +149,12 @@ in
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
-        extraPackages = hpkgs: [                      # Open configuration for additional Haskell packages.
-          hpkgs.xmonad-contrib                               # Install xmonad-contrib.
-          hpkgs.xmonad-extras                                # Install xmonad-extras.
-          hpkgs.xmonad                                       # Install xmonad itself.
-        ];
+        extraPackages =
+          hpkgs: [ # Open configuration for additional Haskell packages.
+            hpkgs.xmonad-contrib # Install xmonad-contrib.
+            hpkgs.xmonad-extras # Install xmonad-extras.
+            hpkgs.xmonad # Install xmonad itself.
+          ];
       };
       windowManager.leftwm.enable = true;
 
@@ -175,37 +165,34 @@ in
       layout = "dvorak";
       videoDrivers = [ "nvidia" ];
       config = ''
-Section "Monitor"
-    Identifier  "HDMI-0"
-    Option      "Primary" "true"
-EndSection
+        Section "Monitor"
+            Identifier  "HDMI-0"
+            Option      "Primary" "true"
+        EndSection
 
-Section "Monitor"
-    Identifier  "DP-1"
-    Option      "RightOf" "HDMI-0"
-EndSection
-'';
+        Section "Monitor"
+            Identifier  "DP-1"
+            Option      "RightOf" "HDMI-0"
+        EndSection
+      '';
     };
 
     logind.extraConfig = ''
-    IdleAction=hybrid-sleep
-    IdleActionSec=30min
-    HandlePowerKey=suspend
-    HandleRebootKey=ignore
-'';
-
+      IdleAction=hybrid-sleep
+      IdleActionSec=30min
+      HandlePowerKey=suspend
+      HandleRebootKey=ignore
+    '';
 
   };
 
   i18n.inputMethod = {
     enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin];
-
+    ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin ];
 
     # enabled = "fcitx";
     fcitx.engines = with pkgs.fcitx-engines; [ hangul ];
   };
-
 
   # emacs or sometheing
   #
@@ -225,7 +212,8 @@ EndSection
   hardware.pulseaudio.enable = true;
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.nvidiaSettings = true;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+  hardware.nvidia.package =
+    config.boot.kernelPackages.nvidiaPackages.legacy_470;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -239,191 +227,170 @@ EndSection
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs;
-    let development = [
+    let
+      cTools = [
 
-    alacritty
-    exa
-    fd
-    gh
-    git
-    guake
-    openssl
-    pandoc
-    ripgrep
-    sqlite
-    unzip
-    vim
-    vscode
-    wget
-    zoxide
-        ]; in
-    development ++ [
-    # development
+        cmake
+        gcc
+        glslang
+        gnumake
+        rtags
+      ];
 
-    # dhcpcd # I don't know why I have to enable it here
-    # emacs
-    # tree
+      python = [
+        python-with-my-packages
+        black
+        pipenv
+        python39Packages.isort
+        python39Packages.pytest
+        python39Packages.nose
+        python39Packages.pyflakes
+      ];
 
+      rust = [ clippy cargo rustc racer rust-analyzer rustfmt ];
+      haskell = [ ghc hlint cabal-install haskellPackages.hoogle ];
 
+      shell = [ shellcheck ];
 
-    # working with Krist
-#     (
-#       flutter.overrideAttrs  (old:
-#         let channel = "stable";
-#             version = "2.2.2";
-#           filename = "flutter_linux_${version}-${channel}.tar.xz";
-#         in
-#                                    rec {
-#                                      inherit version;
-#                                      name = "customflutter-version";
+      json = [ jq ];
 
-#  src = fetchurl {
-#       url = "https://storage.googleapis.com/flutter_infra_release/releases/${channel}/linux/${filename}";
-#       # sha256 = "sha256-0000000000000000000000000000000000000000000=";
-# sha256 = "sha256-2h68WXVjtdPkbY/Vu1BcrmRUQ8G2U9e0++18CD9NSYo=";
-#     };
-#                                    })
-#     )
-#
-#     flutter.override { pname = "oldflutter"; version = "2.2.2";
+      ruby = [ ruby ];
+      nix = [ nixfmt ];
 
-#  src =
+      allLanguages = cTools ++ python ++ rust ++ haskell ++ shell ++ json
+        ++ ruby ++ nix;
 
-#         let channel = "stable";
-#             version = "2.2.2";
-#           filename = "flutter_linux_${version}-${channel}.tar.xz"; in
-#    fetchurl {
-#       url = "https://storage.googleapis.com/flutter_infra_release/releases/${channel}/linux/${filename}";
-#       # sha256 = "sha256-0000000000000000000000000000000000000000000=";
-# sha256 = "sha256-2h68WXVjtdPkbY/Vu1BcrmRUQ8G2U9e0++18CD9NSYo=";
-#     };
-#                      }
-    # android-tools
+      gnome = [
+        #gnome
+        gnome.gnome-shell-extensions
+        gnome.gnome-tweaks
+        whitesur-gtk-theme
+        whitesur-icon-theme
+        gnomeExtensions.dash-to-dock
+        gnomeExtensions.lyrics-finder
+        gnomeExtensions.soft-brightness
+        gnomeExtensions.material-shell
+        gnomeExtensions.pop-shell
+      ];
 
+      pantheon = [
+        pantheon
+        pantheon.switchboard
+        pantheon.wingpanel
+        #
+      ];
+      customWM = [ feh picom rofi wmctrl polybarFull ];
+      programs = [
+        # anki # this anki is out of date
+        # adobe-reader # for some reason this is "dangerous"
+        anki-bin
+        audacity
+        bitwarden
+        brave
+        discord
+        firefox
+        lutris
+        lyrebird
+        minecraft
+        mpv # I don't know what this is actually
+        runelite
+        slack
+        spotify
+        spotify-tui
+        spotifyd
+        thunderbird
+        zoom-us
 
+        coq
+        isabelle
+        lean
+      ];
+      development = [
 
-    # c c++
-    cmake
-    gcc
-    glslang
-    gnumake
-    rtags
+        alacritty
+        exa
+        fd
+        gh
+        git
+        guake
+        openssl
+        pandoc
+        ripgrep
+        sqlite
+        unzip
+        vim
+        vscode
+        wget
+        zoxide
+      ];
+    in development ++ programs ++ languages ++ [
+      # development
 
+      # working with Krist
+      #     (
+      #       flutter.overrideAttrs  (old:
+      #         let channel = "stable";
+      #             version = "2.2.2";
+      #           filename = "flutter_linux_${version}-${channel}.tar.xz";
+      #         in
+      #                                    rec {
+      #                                      inherit version;
+      #                                      name = "customflutter-version";
 
-    # python
-    python-with-my-packages
-    black
-    pipenv
-    python39Packages.isort
-    python39Packages.pytest
-    python39Packages.nose
-    python39Packages.pyflakes
+      #  src = fetchurl {
+      #       url = "https://storage.googleapis.com/flutter_infra_release/releases/${channel}/linux/${filename}";
+      #       # sha256 = "sha256-0000000000000000000000000000000000000000000=";
+      # sha256 = "sha256-2h68WXVjtdPkbY/Vu1BcrmRUQ8G2U9e0++18CD9NSYo=";
+      #     };
+      #                                    })
+      #     )
+      #
+      #     flutter.override { pname = "oldflutter"; version = "2.2.2";
 
+      #  src =
 
+      #         let channel = "stable";
+      #             version = "2.2.2";
+      #           filename = "flutter_linux_${version}-${channel}.tar.xz"; in
+      #    fetchurl {
+      #       url = "https://storage.googleapis.com/flutter_infra_release/releases/${channel}/linux/${filename}";
+      #       # sha256 = "sha256-0000000000000000000000000000000000000000000=";
+      # sha256 = "sha256-2h68WXVjtdPkbY/Vu1BcrmRUQ8G2U9e0++18CD9NSYo=";
+      #     };
+      #                      }
+      # android-tools
 
-    # shell
-    shellcheck
+      # commandline programs
 
-    # rust
-    clippy
-    cargo
-    rustc
-    racer
-    rust-analyzer
-    rustfmt
+      ccze # log colorizer
+      graphviz
+      htop
+      iw
+      maude
+      metamath
+      neofetch
+      tmux
+      wl-clipboard
 
-    # haskell
-    ghc
-    hlint
-    cabal-install
-    haskellPackages.hoogle
+      # swaglyrics
+      texlive.combined.scheme-full
+      cava
+      glances
 
-    # json
-    jq
+      # applications
 
-    # nix
-    nixfmt
+      capitaine-cursors
 
-    # ruby
-    ruby
+      #
 
-    # commandline programs
+      # No window manager mode
 
-    ccze # log colorizer
-    graphviz
-    htop
-    iw
-    maude
-    metamath
-    neofetch
-    tmux
-    wl-clipboard
-
-    # swaglyrics
-    texlive.combined.scheme-full
-    cava
-    glances
-
-
-    # applications
-    # anki # this anki is out of date
-    # adobe-reader # for some reason this is "dangerous"
-    anki-bin
-    audacity
-    bitwarden
-    brave
-    discord
-    firefox
-    lutris
-    lyrebird
-    minecraft
-    mpv
-    runelite
-    slack
-    spotify
-    spotify-tui
-    spotifyd
-    thunderbird
-    zoom-us
-
-    #gnome
-    # gnome.gnome-shell-extensions
-    # gnome.gnome-tweaks
-    whitesur-gtk-theme
-    whitesur-icon-theme
-    # gnomeExtensions.dash-to-dock
-    # gnomeExtensions.lyrics-finder
-    # gnomeExtensions.soft-brightness
-    # gnomeExtensions.material-shell
-    # gnomeExtensions.pop-shell
-
-    capitaine-cursors
-
-    # pantheon
-    # pantheon.switchboard
-    # pantheon.wingpanel
-    #
-    #
-
-    # No window manager mode
-    feh
-    picom
-    rofi
-    wmctrl
-    polybarFull
-
-
-    coq
-    isabelle
-    lean
-
-  ];
+    ];
 
   programs.fish.enable = true;
   programs.steam.enable = true;
   programs.pantheon-tweaks.enable = true;
   nixpkgs.config.allowUnfree = true;
-
 
   virtualisation.virtualbox.host.enable = true;
   virtualisation.docker.enable = true;
@@ -433,12 +400,12 @@ EndSection
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-  gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
   };
-   };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
