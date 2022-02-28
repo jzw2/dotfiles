@@ -215,6 +215,13 @@ in {
   hardware.nvidia.package =
     config.boot.kernelPackages.nvidiaPackages.legacy_470;
 
+
+  hardware.opengl.extraPackages = [
+    (pkgs.runCommand "nvidia-icd" { } ''
+      mkdir -p $out/share/vulkan/icd.d
+      cp ${pkgs.linuxPackages.nvidia_x11}/share/vulkan/icd.d/nvidia_icd.x86_64.json $out/share/vulkan/icd.d/nvidia_icd.json
+    '')
+  ];
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -229,12 +236,12 @@ in {
   environment.systemPackages = with pkgs;
     let
       cTools = [
-
         cmake
         gcc
         glslang
         gnumake
         rtags
+
       ];
 
       python = [
@@ -247,14 +254,17 @@ in {
         python39Packages.pyflakes
       ];
 
-      rust = [ clippy cargo rustc racer rust-analyzer rustfmt ];
+      rust = [ clippy cargo # rustc
+               rustup
+               racer rust-analyzer rustfmt ];
       haskell = [ ghc hlint cabal-install haskellPackages.hoogle ];
 
       shell = [ shellcheck ];
 
       json = [ jq ];
 
-      ruby = [ ruby ];
+      ruby = [ # ruby
+      ];
       nix = [ nixfmt ];
 
       allLanguages = cTools ++ python ++ rust ++ haskell ++ shell ++ json
@@ -305,6 +315,23 @@ in {
         isabelle
         lean
       ];
+      cmdTools = [
+
+        ccze # log colorizer
+        graphviz
+        htop
+        iw
+        maude
+        metamath
+        neofetch
+        tmux
+        wl-clipboard
+
+        # swaglyrics
+        texlive.combined.scheme-full
+        cava
+        glances
+      ];
       development = [
 
         alacritty
@@ -318,12 +345,12 @@ in {
         ripgrep
         sqlite
         unzip
-        vim
+        neovim
         vscode
         wget
         zoxide
       ];
-    in development ++ programs ++ languages ++ [
+    in development ++ programs ++ allLanguages ++ cmdTools ++ customWM ++ [
       # development
 
       # working with Krist
@@ -362,28 +389,9 @@ in {
 
       # commandline programs
 
-      ccze # log colorizer
-      graphviz
-      htop
-      iw
-      maude
-      metamath
-      neofetch
-      tmux
-      wl-clipboard
-
-      # swaglyrics
-      texlive.combined.scheme-full
-      cava
-      glances
-
       # applications
 
       capitaine-cursors
-
-      #
-
-      # No window manager mode
 
     ];
 
@@ -438,4 +446,3 @@ in {
   system.stateVersion = "20.09"; # Did you read the comment?
 
 }
-
