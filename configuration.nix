@@ -17,6 +17,12 @@ let
       z3
     ];
   python-with-my-packages = python3.withPackages my-python-packages;
+  nixos-master = fetchFromGitHub {
+          owner = "NixOS";
+          repo = "nixpkgs";
+          rev = "b9234e3dfc1b597b3217b779f72559a921c91fb6";
+          sha256 = "sha256-9n0TTUf3xu4X/9Wr9+BXo4W08GD2o0g2NfcP+fW0HJc=";
+  };
 in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -30,9 +36,9 @@ in {
       rev = "c98ad03b2201e17f590b6a3ec84a1c5e4722eb09";
     }))
     (self: super: {
-      version = "0.3.0";
       leftwm = super.leftwm.overrideAttrs (old: rec {
         name = "leftwm";
+        version = "0.3.0";
         src = super.fetchFromGitHub {
           owner = "leftwm";
           repo = "leftwm";
@@ -47,6 +53,13 @@ in {
         });
       });
     })
+    (self: super: {
+
+      # steam = (import nixos-master {
+
+      #   config.allowUnfree = true;
+      # }).steam;
+    })
   ];
   # fonts or something idk
 
@@ -59,7 +72,7 @@ in {
       noto-fonts-cjk
       noto-fonts-emoji
       fira-code
-      font-awesome-ttf
+      font-awesome
 
       babelstone-han # yay I like archaick characters
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
@@ -130,7 +143,7 @@ in {
     emacs.enable = true;
     pantheon.contractor.enable = true;
     gnome.gnome-keyring.enable = true;
-    gnome.games.enable = true;
+    # gnome.games.enable = true;
     upower.enable = true;
 
     dbus = {
@@ -178,7 +191,7 @@ in {
     };
 
     logind.extraConfig = ''
-      IdleAction=hybrid-sleep
+      IdleAction=suspend
       IdleActionSec=30min
       HandlePowerKey=suspend
       HandleRebootKey=ignore
@@ -216,23 +229,6 @@ in {
     config.boot.kernelPackages.nvidiaPackages.legacy_470;
 
 
-  hardware.opengl.extraPackages = [
-    (pkgs.runCommand "nvidia-icd" { } ''
-      mkdir -p $out/share/vulkan/icd.d
-      cp ${pkgs.linuxPackages.nvidia_x11}/share/vulkan/icd.d/nvidia_icd.x86_64.json $out/share/vulkan/icd.d/nvidia_icd.json
-    '')
-  ];
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.jane = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  # };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs;
     let
       cTools = [
@@ -290,26 +286,35 @@ in {
         #
       ];
       customWM = [ feh picom rofi wmctrl polybarFull ];
-      programs = [
+      programs =
+        let music = [spotify spotify-tui
+                     spotifyd
+                sptlrx
+                    ];
+            gaming = [
+
+        lutris
+        minecraft
+        runelite
+            ];
+            communication = [
+
+        discord
+        zoom-us
+        slack
+            ]; in
+
+              music ++ gaming ++ communication ++ [
         # anki # this anki is out of date
         # adobe-reader # for some reason this is "dangerous"
         anki-bin
         audacity
         bitwarden
         brave
-        discord
-        firefox
-        lutris
+        # firefox
         lyrebird
-        minecraft
         mpv # I don't know what this is actually
-        runelite
-        slack
-        spotify
-        spotify-tui
-        spotifyd
         thunderbird
-        zoom-us
 
         coq
         isabelle
