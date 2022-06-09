@@ -1,5 +1,8 @@
-{ config, lib, pkgs, ... }:
-
+ pkgs :
+with pkgs;
 {
-  ok
+  essential = [ neovim pandoc ripgrep bat
+                neofetch # yes very essential
+                # tmux
+              ];
 }

@@ -60,21 +60,20 @@
 # zoxide-0.8.1
 # zstd-1.5.2
   environment.systemPackages =
+    with ((import ./software.nix) pkgs);
     with pkgs;
+
     [ pkgs.vim
       pkgs.hello
 
-      pandoc
       sd # replacement for sed
       htop #
-      bat # rust replacement for cat
       ripgrep # rust replacement for grep
-      neovim
       zstd # idk what this is
       lua
 
 
-    ];
+    ] ++ essential;
 
   # this option is useless
   environment.loginShell = "fish";
@@ -84,7 +83,8 @@
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
-  # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
+  environment.darwinConfig = "$HOME/Desktop/dotfiles/nix/macos.nix";
+
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
