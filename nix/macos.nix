@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+
+
+  imports = [ <home-manager/nix-darwin> ];
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   # # #
@@ -60,20 +63,20 @@
 # zoxide-0.8.1
 # zstd-1.5.2
   environment.systemPackages =
-    with ((import ./software.nix) pkgs);
+    let software = ((import ./software.nix) pkgs); in
     with pkgs;
-
-    [ pkgs.vim
-      pkgs.hello
-
-      sd # replacement for sed
-      htop #
-      ripgrep # rust replacement for grep
-      zstd # idk what this is
-      lua
-
-
-    ] ++ essential;
+    let extras = [
+          sd
+          sptlrx
+                 ]; in
+    (builtins.concatLists [
+      software.essential
+      software.haskellPkgs
+      software.purescript
+      software.rust
+      software.latex
+      extras
+    ]) ;
 
   # this option is useless
   environment.loginShell = "fish";
@@ -117,6 +120,51 @@ abbr --add cat bat
 '';
   };
 
+
+  system.defaults = {
+    dock = {
+      autohide = true;
+      showhidden = true;
+      mru-spaces = false;
+    };
+    finder = {
+      AppleShowAllExtensions = true;
+      QuitMenuItem = true;
+      ShowStatusBar = true;
+      _FXShowPosixPathInTitle = true;
+    };
+    NSGlobalDomain = {
+      AppleKeyboardUIMode = 3;
+      ApplePressAndHoldEnabled = true;
+      AppleFontSmoothing = 1;
+      _HIHideMenuBar = false;
+      InitialKeyRepeat = 20;
+      KeyRepeat = 1;
+      NSAutomaticQuoteSubstitutionEnabled = false;
+      NSAutomaticSpellingCorrectionEnabled = false;
+      "com.apple.swipescrolldirection" = true;
+    };
+  };
+
+  users.users.johnwang = {
+    name = "John";
+  };
+
+  home-manager.users.johnwang = {
+    programs = {
+      git = {
+        enable = true;
+        delta.enable = true;
+      };
+    };
+    home.stateVersion = "22.11";
+  };
+
+  homebrew = {
+
+    enable = true;
+    casks = [ "virtualbox" "hammerspoon" ];
+  };
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
