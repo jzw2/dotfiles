@@ -95,14 +95,29 @@
   services = {
     nix-daemon.enable = true;
     yabai = {
-      enable = true;
-      enableScriptingAddition = true;
+      enable = false; # I hate this this is too complicated
+      enableScriptingAddition = false; # don't enable this it breaks the computer
       # package = pkgs.yabai; # this is truely idiotic, why doesn't it have a default
 
       package = (import (
         fetchTarball {
           url = "https://github.com/IvarWithoutBones/nixpkgs/archive/refs/heads/bump-yabai.tar.gz";
         }) {}).yabai;
+
+    };
+    skhd = {
+      enable = false;
+      package = pkgs.skhd;
+      # skhdConfig = ''
+      #   ctrl + alt + cmd - space : if [[ $(yabai -m config layout) == bsp ]]; then yabai -m config layout stack; elif [[ $(yabai -m config layout) == stack ]]; then yabai -m config layout float; else yabai -m config layout bsp; fi
+      # '';
+      skhdConfig = ''
+ctrl + alt + cmd - space : yabai -m config layout stack
+ctrl - a : osascript -e 'display notification "Lorem ipsum dolor sit amet" with title "Title"'
+ctrl + alt - return : alacritty
+ctrl + alt - h : yabai -m window --focus west
+ctrl - n : osascript -e 'display notification "Lorem ipsum dolor sit amet" with title "Title"'
+      '';
 
     };
   };
