@@ -97,7 +97,12 @@
     yabai = {
       enable = true;
       enableScriptingAddition = true;
-      package = pkgs.yabai; # this is truely idiotic, why doesn't it have a default
+      # package = pkgs.yabai; # this is truely idiotic, why doesn't it have a default
+
+      package = (import (
+        fetchTarball {
+          url = "https://github.com/IvarWithoutBones/nixpkgs/archive/refs/heads/bump-yabai.tar.gz";
+        }) {}).yabai;
 
     };
   };
