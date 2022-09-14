@@ -90,7 +90,17 @@
 
 
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+
+
+  services = {
+    nix-daemon.enable = true;
+    yabai = {
+      enable = true;
+      enableScriptingAddition = true;
+      package = pkgs.yabai; # this is truely idiotic, why doesn't it have a default
+
+    };
+  };
   # nix.package = pkgs.nix;
 
   # Create /etc/bashrc that loads the nix-darwin environment.
