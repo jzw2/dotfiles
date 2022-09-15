@@ -89,11 +89,41 @@
   environment.darwinConfig = "$HOME/Desktop/dotfiles/nix/macos.nix";
 
 
-  # Auto upgrade nix package and the daemon service.
+  # autostart sketchybar pls work
+  launchd.user.agents.sketchybar = {
+        serviceConfig.ProgramArguments = [ "${pkgs.sketchybar}/bin/sketchybar" ];
 
+        serviceConfig.KeepAlive = true;
+        serviceConfig.RunAtLoad = true;
+        serviceConfig.EnvironmentVariables = {
+          PATH = "${pkgs.sketchybar}/bin:${config.environment.systemPath}";
+        };
+      };
 
   services = {
     nix-daemon.enable = true;
+    spacebar = {
+      enable = false; # for some reason only works on one space, does not do it on the others
+      package = (import (
+        fetchTarball {
+          url = "https://github.com/NixOS/nixpkgs/archive/refs/heads/master.tar.gz";
+        }) {}).spacebar;
+  config = {
+    position                   = "top";
+    display                    = "all";
+    height                     = 26;
+    spaces                     = "on";
+    title = "off";
+    clock                      = "off";
+    power                      = "off";
+    dnd                        = "off";
+    right_shell                = "off";
+    right_shell_icon           = "";
+    right_shell_command        = "whoami";
+    center_shell = "on";
+    center_shell_command = "echo hello";
+  };
+    };
     yabai = {
       enable = false; # I hate this this is too complicated
       enableScriptingAddition = false; # don't enable this it breaks the computer
