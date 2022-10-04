@@ -98,7 +98,7 @@
         serviceConfig.EnvironmentVariables = {
           PATH = "${pkgs.sketchybar}/bin:${config.environment.systemPath}";
         };
-      };
+   };
 
   services = {
     nix-daemon.enable = true;
@@ -150,6 +150,10 @@ ctrl - n : osascript -e 'display notification "Lorem ipsum dolor sit amet" with 
       '';
 
     };
+    emacs = {
+      enable = true;
+      package = pkgs.emacs;
+    };
   };
   # nix.package = pkgs.nix;
 
@@ -197,7 +201,7 @@ abbr --add cat bat
       AppleKeyboardUIMode = 3;
       ApplePressAndHoldEnabled = true;
       AppleFontSmoothing = 1;
-      _HIHideMenuBar = false;
+      _HIHideMenuBar = true; # hide this so I can have my bar
       InitialKeyRepeat = 20;
       KeyRepeat = 1;
       NSAutomaticQuoteSubstitutionEnabled = false;

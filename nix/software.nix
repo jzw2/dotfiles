@@ -43,7 +43,11 @@ with pkgs;
   # rustup
   # racer
 
-  rust-analyzer rustfmt ];
+  rust-analyzer
+
+  # rustfmt
+
+  rustup];
   haskellPkgs = [ ghc hlint cabal-install haskellPackages.hoogle ];
 
   shell = [ shellcheck ];
