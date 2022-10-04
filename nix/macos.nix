@@ -1,9 +1,13 @@
-{ config, pkgs, ... }:
+{ config, pkgs, emacs, ... }:
 
 {
 
 
-  imports = [ <home-manager/nix-darwin> ];
+  imports = [ 
+
+  # <home-manager/nix-darwin> 
+
+  ];
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   # # #
@@ -151,8 +155,8 @@ ctrl - n : osascript -e 'display notification "Lorem ipsum dolor sit amet" with 
 
     };
     emacs = {
-      enable = true;
-      package = pkgs.emacs;
+      enable = false;
+      package = emacs;
     };
   };
   # nix.package = pkgs.nix;
@@ -214,15 +218,15 @@ abbr --add cat bat
     name = "John";
   };
 
-  home-manager.users.johnwang = {
-    programs = {
-      git = {
-        enable = true;
-        delta.enable = true;
-      };
-    };
-    home.stateVersion = "22.11";
-  };
+  # home-manager.users.johnwang = {
+    # programs = {
+      # git = {
+        # enable = true;
+        # delta.enable = true;
+      # };
+    # };
+    # home.stateVersion = "22.11";
+  # };
 
   homebrew = {
 
