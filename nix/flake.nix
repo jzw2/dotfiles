@@ -9,7 +9,7 @@
   };
 
   outputs = { self, darwin, nixpkgs, emacs }: {
-    darwinConfigurations."Johns-MacBook" = darwin.lib.darwinSystem {
+    darwinConfigurations."MacBook-Pro-4" = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       modules = [ 
 	./macos.nix 
