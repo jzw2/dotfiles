@@ -70,7 +70,14 @@
     let software = ((import ./software.nix) pkgs); in
     with pkgs;
     let extras = [
+          swiProlog
+          bat
+          hunspell
+          hunspellDicts.en_US
           sd
+          mu
+          imagemagick
+          zstd
           sptlrx
                  ]; in
     (builtins.concatLists [
@@ -231,7 +238,7 @@ abbr --add cat bat
   homebrew = {
 
     enable = true;
-    casks = [ "virtualbox" "hammerspoon" ];
+    casks = [ "virtualbox" "hammerspoon" "alacritty" ];
   };
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
