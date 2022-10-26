@@ -76,6 +76,7 @@
           hunspellDicts.en_US
           sd
           mu
+          lilypond-unstable
           imagemagick
           zstd
           sptlrx
