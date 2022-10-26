@@ -3,16 +3,16 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
     darwin.url = "github:lnl7/nix-darwin/master";
     emacs.url = "github:cmacrae/emacs";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, darwin, nixpkgs, emacs }: {
-    darwinConfigurations."MacBook-Pro-4" = darwin.lib.darwinSystem {
+  outputs = { self, darwin, nixpkgs, nixpkgs-stable, emacs }: {
+    darwinConfigurations."MacBook-Pro-5" = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       modules = [ 
-	./macos.nix 
 	{
 	  nix.binaryCaches = [
 	    "https://cachix.org/api/v1/cache/emacs"
@@ -26,6 +26,7 @@
 	    # emacs.overlay
 	  ];
 	}
+	./macos.nix
       ];
     };
   };

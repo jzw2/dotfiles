@@ -155,8 +155,8 @@ ctrl - n : osascript -e 'display notification "Lorem ipsum dolor sit amet" with 
 
     };
     emacs = {
-      enable = false;
-      package = emacs;
+      enable = true;
+      package = pkgs.emacs;
     };
   };
   # nix.package = pkgs.nix;
