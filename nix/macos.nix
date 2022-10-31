@@ -80,6 +80,7 @@
           imagemagick
           zstd
           sptlrx
+          sketchybar
                  ]; in
     (builtins.concatLists [
       software.essential
