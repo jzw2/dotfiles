@@ -30,7 +30,7 @@ with pkgs;
     black
     pipenv
     python39Packages.isort
-    python39Packages.pytest
+    # python39Packages.pytest
     python39Packages.nose
     python39Packages.pyflakes
   ];

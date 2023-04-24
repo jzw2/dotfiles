@@ -103,15 +103,15 @@
 
 
   # autostart sketchybar pls work
-  launchd.user.agents.sketchybar = {
-        serviceConfig.ProgramArguments = [ "${pkgs.sketchybar}/bin/sketchybar" ];
+  # launchd.user.agents.sketchybar = {
+  #       serviceConfig.ProgramArguments = [ "${pkgs.sketchybar}/bin/sketchybar" ];
 
-        serviceConfig.KeepAlive = true;
-        serviceConfig.RunAtLoad = true;
-        serviceConfig.EnvironmentVariables = {
-          PATH = "${pkgs.sketchybar}/bin:${config.environment.systemPath}";
-        };
-   };
+  #       serviceConfig.KeepAlive = true;
+  #       serviceConfig.RunAtLoad = true;
+  #       serviceConfig.EnvironmentVariables = {
+  #         PATH = "${pkgs.sketchybar}/bin:${config.environment.systemPath}";
+  #       };
+  #  };
 
   services = {
     nix-daemon.enable = true;
