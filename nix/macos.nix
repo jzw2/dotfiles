@@ -70,7 +70,7 @@
     let software = ((import ./software.nix) pkgs); in
     with pkgs;
     let extras = [
-          swiProlog
+          # swiProlog
           bat
           hunspell
           hunspellDicts.en_US

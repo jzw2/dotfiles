@@ -43,7 +43,7 @@ with pkgs;
   # rustup
   # racer
 
-  rust-analyzer
+  # rust-analyzer
 
   # rustfmt
 
