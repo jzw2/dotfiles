@@ -345,7 +345,7 @@ in {
         gh
         git
         guake
-        openssl
+        # openssl
         pandoc
         ripgrep
         sqlite

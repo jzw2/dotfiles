@@ -59,8 +59,10 @@ with pkgs;
   ];
   nix = [ nixfmt ];
 
-  purescript = [ purescript spago esbuild nodejs ] ;
+  purescript = [ purescript spago esbuild
+               #   nodejs
 
+               ] ;
 
   latex = [ texlab lua53Packages.digestif ] ;
 
