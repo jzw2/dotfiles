@@ -194,6 +194,8 @@ abbr --add cat bat
 
     # I don't know why but I have to set this otherwies it gets broken
     set -g default-terminal "screen-256color"
+    set -sg escape-time 10
+
 '';
   };
 
