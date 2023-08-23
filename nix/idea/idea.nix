@@ -5,8 +5,8 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
+	imports =
+		[ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -15,8 +15,14 @@
     extraOptions = ''
         experimental-features = nix-command flakes
     '';
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
   };
 
+  nixpkgs.config.allowUnfree = true;
   # Use the GRUB 2 boot loader.
   # boot.loader.grub.enable = true;
   # boot.loader.grub.version = 2;
@@ -54,8 +60,8 @@
   # };
 
   fonts = {
-    enableDefaultFonts = true;
-    fonts = with pkgs; [
+    enableDefaultPackages = true;
+    packages = with pkgs; [
       siji # for bars or whatever
       jetbrains-mono
       noto-fonts
@@ -77,9 +83,8 @@
     };
   };
   # Enable the GNOME 3 Desktop Environment.
-  services.xserver.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
   
 
   # Configure keymap in X11
@@ -106,7 +111,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget nvim
+    wget neovim
     emacs
     firefox
     microsoft-edge
