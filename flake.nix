@@ -1,6 +1,6 @@
 # /etc/nixos/flake.nix
 {
-  description = "flake for yourHostNameGoesHere";
+  description = "Flake fro the ideapad";
 
   inputs = {
     nixpkgs = {
@@ -13,7 +13,7 @@
       idea = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ../nix/idea.nix
+          ./nix/idea/idea.nix
         ];
       };
     };
