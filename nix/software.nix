@@ -66,4 +66,6 @@ with pkgs;
 
   latex = [ texlab lua53Packages.digestif ] ;
 
+  applications = [ whatsapp-for-linux spotify discord minecraft ] ;
+
 }
