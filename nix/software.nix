@@ -12,6 +12,7 @@ with pkgs;
     unzip
     wget
     fd # find replacement
+    sqlite # need it for org roam
     # tmux
   ];
 
