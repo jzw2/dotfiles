@@ -110,14 +110,32 @@
      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
    };
 
+   users.defaultUserShell = pkgs.fish;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    wget neovim
-    emacs
-    firefox
-    microsoft-edge
-  ];
+  environment.systemPackages =
+    let software = ((import ../software.nix) pkgs); in
+    with pkgs;
+    let extras = [
+          swiProlog
+          bat
+          sd
+          mu
+          # lilypond-unstable
+          imagemagick
+          zstd
+          sptlrx
+          microsoft-edge
+                 ]; in
+    (builtins.concatLists [
+      software.essential
+      software.haskellPkgs
+      # software.purescript
+      software.rust
+      software.latex
+      extras
+    ]) ;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
