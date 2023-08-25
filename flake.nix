@@ -1,6 +1,6 @@
 # /etc/nixos/flake.nix
 {
-  description = "Flake fro the ideapad";
+  description = "My configurations";
 
   inputs = {
     nixpkgs = {
@@ -14,6 +14,12 @@
         system = "x86_64-linux";
         modules = [
           ./nix/idea/idea.nix
+        ];
+      };
+      thinkpad = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./nix/thinkpad/configuration.nix
         ];
       };
     };
