@@ -48,7 +48,8 @@ with pkgs;
 
   # rustfmt
 
-  rustup];
+  rustup
+  ];
   haskellPkgs = [ ghc hlint cabal-install haskellPackages.hoogle ];
 
   shell = [ shellcheck ];
@@ -67,6 +68,9 @@ with pkgs;
 
   latex = [ texlab lua53Packages.digestif ] ;
 
-  applications = [ whatsapp-for-linux spotify discord minecraft ] ;
+  applications = [ whatsapp-for-linux spotify discord
+                   # minecraft # broken
+                   prismlauncher # minecraft
+                 ] ;
 
 }
