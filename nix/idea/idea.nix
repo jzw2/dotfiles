@@ -127,12 +127,14 @@
           zstd
           sptlrx
           microsoft-edge
+          gnomeExtensions.appindicator
                  ]; in
     (builtins.concatLists [
       software.essential
       software.haskellPkgs
       # software.purescript
       software.rust
+      software.cTools
       software.latex
       software.applications
       extras
