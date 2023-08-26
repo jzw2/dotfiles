@@ -87,6 +87,7 @@
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.gdm.debug = true;
+  services.gnome.gnome-keyring.enable = true;
   
 
   # Configure keymap in X11
@@ -151,6 +152,9 @@
 
   programs.fish.enable = true;
   programs.steam.enable = true;
+  programs.hyprland.enable = true;
+  programs.waybar.enable = true;
+  programs.waybar.package = pkgs.waybar-hyprland;
 
   # List services that you want to enable:
 

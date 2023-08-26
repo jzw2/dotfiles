@@ -13,7 +13,9 @@ with pkgs;
     wget
     fd # find replacement
     sqlite # need it for org roam
+    alacritty
     # tmux
+    glances 
   ];
 
 
@@ -72,5 +74,11 @@ with pkgs;
                    # minecraft # broken
                    prismlauncher # minecraft
                  ] ;
+  hyprland = [ 
+     wofi
+     kitty
+     pipewire
+     dunst
+  ];
 
 }
