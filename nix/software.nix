@@ -68,7 +68,7 @@ with pkgs;
 
                ] ;
 
-  latex = [ texlab lua53Packages.digestif ] ;
+  latex = [ texlive.combined.scheme-medium texlab lua53Packages.digestif ] ;
 
   applications = [ whatsapp-for-linux spotify discord
                    # minecraft # broken

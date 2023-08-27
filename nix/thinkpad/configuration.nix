@@ -134,6 +134,7 @@
       # software.purescript
       software.rust
       software.latex
+      software.cTools
       software.applications
       extras
     ]) ;
