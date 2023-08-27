@@ -73,6 +73,7 @@ with pkgs;
   applications = [ whatsapp-for-linux spotify discord
                    # minecraft # broken
                    prismlauncher # minecraft
+                   # lutris # use flatpak apparently is better
                  ] ;
   hyprland = [ 
      wofi
