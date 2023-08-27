@@ -108,7 +108,7 @@
    users.users.john = {
      isNormalUser = true;
      initialPassword = "";
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "networkmanager"]; # Enable ‘sudo’ for the user.
    };
 
    users.defaultUserShell = pkgs.fish;
