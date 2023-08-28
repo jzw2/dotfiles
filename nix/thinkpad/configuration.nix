@@ -59,6 +59,14 @@
   #   keyMap = "us";
   # };
 
+  i18n.inputMethod = {
+    enabled = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin ];
+
+    # enabled = "fcitx";
+    # fcitx.engines = with pkgs.fcitx-engines; [ hangul ];
+  };
+
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
@@ -97,8 +105,8 @@
   # services.printing.enable = true;
 
   # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+  sound.enable = true;
+  hardware.pulseaudio.enable = true; # give me alsa?
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -107,7 +115,7 @@
    users.users.john = {
      isNormalUser = true;
      initialPassword = "";
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "networkmanager"]; # Enable ‘sudo’ for the user.
    };
 
    users.defaultUserShell = pkgs.fish;
