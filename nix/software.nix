@@ -73,7 +73,13 @@ with pkgs;
   applications = [ whatsapp-for-linux spotify discord
                    # minecraft # broken
                    prismlauncher # minecraft
-                   # lutris # use flatpak apparently is better
+                    (lutris.override {
+        extraPkgs = pkgs: [
+            wineWowPackages.staging
+            winetricks
+            wineWowPackages.waylandFull
+        ];
+    }) # use flatpak apparently is better
                  ] ;
   hyprland = [ 
      wofi

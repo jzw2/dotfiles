@@ -119,11 +119,11 @@
     let software = ((import ../software.nix) pkgs); in
     with pkgs;
     let extras = [
+          steam-tui
+          steamPackages.steamcmd
           swiProlog
           bat
           sd
-          mu
-          # lilypond-unstable
           imagemagick
           zstd
           sptlrx
@@ -138,6 +138,7 @@
       software.cTools
       software.latex
       software.applications
+      software.hyprland
       extras
     ]) ;
 
