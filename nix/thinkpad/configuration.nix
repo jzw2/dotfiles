@@ -45,8 +45,8 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.enp2s0.useDHCP = true;
-  networking.interfaces.wlp3s0.useDHCP = true;
+  networking.interfaces.enp0s31f6.useDHCP = true;
+  networking.interfaces.wlp4s0.useDHCP = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -58,6 +58,14 @@
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   # };
+
+  i18n.inputMethod = {
+    enabled = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin ];
+
+    # enabled = "fcitx";
+    # fcitx.engines = with pkgs.fcitx-engines; [ hangul ];
+  };
 
   fonts = {
     enableDefaultPackages = true;
@@ -97,8 +105,8 @@
   # services.printing.enable = true;
 
   # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+  sound.enable = true;
+  hardware.pulseaudio.enable = true; # give me alsa?
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -107,7 +115,7 @@
    users.users.john = {
      isNormalUser = true;
      initialPassword = "";
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "networkmanager"]; # Enable ‘sudo’ for the user.
    };
 
    users.defaultUserShell = pkgs.fish;
@@ -127,6 +135,7 @@
           zstd
           sptlrx
           microsoft-edge
+          stack
                  ]; in
     (builtins.concatLists [
       software.essential
