@@ -6,7 +6,6 @@ with pkgs;
     pandoc
     ripgrep
     bat
-    neofetch # yes very essential
     gitFull # allows git gui gitk and stuff
     gh
     unzip
@@ -15,7 +14,14 @@ with pkgs;
     sqlite # need it for org roam
     alacritty
     # tmux
-    glances 
+  ];
+
+  cmdExtras = [
+    helix
+    glances
+    neofetch # yes very essential
+    sptlrx
+    bat
   ];
 
 

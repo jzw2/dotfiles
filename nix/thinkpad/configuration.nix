@@ -127,15 +127,14 @@
     with pkgs;
     let extras = [
           swiProlog
-          bat
           sd
           mu
           # lilypond-unstable
           imagemagick
           zstd
-          sptlrx
           microsoft-edge
           stack
+          teams
                  ]; in
     (builtins.concatLists [
       software.essential
@@ -145,6 +144,7 @@
       software.latex
       software.cTools
       software.applications
+      software.cmdExtras
       extras
     ]) ;
 
