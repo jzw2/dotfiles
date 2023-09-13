@@ -145,6 +145,7 @@
       software.cTools
       software.applications
       software.cmdExtras
+      software.python
       extras
     ]) ;
 

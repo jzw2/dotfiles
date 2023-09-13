@@ -35,13 +35,30 @@ with pkgs;
   ];
 
   python = [
-    python-with-my-packages
-    black
-    pipenv
-    python39Packages.isort
-    # python39Packages.pytest
-    python39Packages.nose
-    python39Packages.pyflakes
+    (
+      python3.withPackages (pyPkgs: with pyPkgs; [
+        noise
+        pillow
+        matplotlib
+
+      (
+        buildPythonPackage rec {
+          pname = "perlin_noise";
+          version = "1.12";
+          src = fetchPypi {
+            inherit pname version;
+            sha256 = "sha256-AexC2fK8M4rlLtuwabN1+4P+xReE4XR5NmztH3BjlXw=";
+          };
+          doCheck = false;
+          propagatedBuildInputs = [
+            # Specify dependencies
+            # pkgs.python3Packages.numpy
+          ];
+        }
+      )
+      ]
+      )
+    )
   ];
 
   rust = [
