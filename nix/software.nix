@@ -40,6 +40,7 @@ with pkgs;
         noise
         pillow
         matplotlib
+        numpy
 
       (
         buildPythonPackage rec {
@@ -96,6 +97,7 @@ with pkgs;
   applications = [ whatsapp-for-linux spotify discord
                    # minecraft # broken
                    prismlauncher # minecraft
+                   anki
                     (lutris.override {
         extraPkgs = pkgs: [
             wineWowPackages.staging
