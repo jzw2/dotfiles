@@ -100,6 +100,7 @@ with pkgs;
   applications = [ whatsapp-for-linux spotify discord
                    # minecraft # broken
                    prismlauncher # minecraft
+                   zoom-us
                    anki
                     (lutris.override {
         extraPkgs = pkgs: [
