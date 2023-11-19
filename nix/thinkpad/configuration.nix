@@ -61,7 +61,7 @@
 
   i18n.inputMethod = {
     enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin ];
+    ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin rime ];
 
     # enabled = "fcitx";
     # fcitx.engines = with pkgs.fcitx-engines; [ hangul ];
@@ -122,7 +122,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages =
+    environment.systemPackages =
     let software = ((import ../software.nix) pkgs); in
     with pkgs;
     let extras = [
@@ -134,6 +134,8 @@
           zstd
           microsoft-edge
           stack
+
+          gnome.pomodoro
           # teams
                  ]; in
     (builtins.concatLists [
@@ -160,6 +162,8 @@
 
   programs.fish.enable = true;
   programs.steam.enable = true;
+  programs.neovim.enable = true;
+  programs.neovim.defaultEditor = true;
 
   # List services that you want to enable:
 
@@ -167,6 +171,7 @@
   services.openssh.enable = true;
   services.emacs.enable = true;
   services.flatpak.enable = true;
+  services.avahi.enable = false;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
