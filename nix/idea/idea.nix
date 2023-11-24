@@ -71,6 +71,7 @@
       font-awesome
 
       babelstone-han # yay I like archaick characters
+      # this was a bad idea everything turns into chinese
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
@@ -119,7 +120,7 @@
     let software = ((import ../software.nix) pkgs); in
     with pkgs;
     let extras = [
-          steam-tui
+          # steam-tui # the nixpkgs one is outdated and broken
           steamPackages.steamcmd
           swiProlog
           bat
@@ -129,6 +130,7 @@
           sptlrx
           microsoft-edge
           gnomeExtensions.appindicator
+	  helix
                  ]; in
     (builtins.concatLists [
       software.essential
@@ -152,6 +154,8 @@
   #
 
   programs.fish.enable = true;
+  programs.neovim.enable = true;
+  programs.neovim.defaultEditor = true;
   programs.steam.enable = true;
   programs.hyprland.enable = true;
   programs.waybar.enable = true;
