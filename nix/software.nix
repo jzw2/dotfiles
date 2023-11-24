@@ -22,6 +22,7 @@ with pkgs;
     neofetch # yes very essential
     sptlrx
     bat
+    zellij
   ];
 
 
