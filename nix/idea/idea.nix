@@ -159,7 +159,8 @@
   programs.steam.enable = true;
   programs.hyprland.enable = true;
   programs.waybar.enable = true;
-  programs.waybar.package = pkgs.waybar-hyprland;
+  # they removed support for this
+  # programs.waybar.package = pkgs.waybar-hyprland;
 
   # List services that you want to enable:
 
