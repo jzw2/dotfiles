@@ -134,6 +134,7 @@
                  ]; in
     (builtins.concatLists [
       software.essential
+      software.cmdExtras
       software.haskellPkgs
       # software.purescript
       software.rust

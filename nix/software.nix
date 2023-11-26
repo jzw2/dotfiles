@@ -23,6 +23,8 @@ with pkgs;
     sptlrx
     bat
     zellij
+    python311Packages.habitipy
+
   ];
 
 
@@ -112,6 +114,7 @@ with pkgs;
      kitty
      pipewire
      dunst
+     bluetuith
   ];
 
 }
