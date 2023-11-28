@@ -1,0 +1,10 @@
+
+theme = "dracula_at_night"
+[editor]
+bufferline = "never"
+
+
+[editor.soft-wrap]
+enable = true
+
+
