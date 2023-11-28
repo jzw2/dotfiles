@@ -18,6 +18,7 @@ with pkgs;
 
   cmdExtras = [
     helix
+    wl-clipboard
     glances
     neofetch # yes very essential
     sptlrx
