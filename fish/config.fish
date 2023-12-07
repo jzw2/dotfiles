@@ -3,6 +3,7 @@ if status is-interactive
 end
 
 abbr -a todo habitipy todos add 
+abbr -a org hx ~/org
 
 function today
     set today (date "+%Y-%m-%d")
