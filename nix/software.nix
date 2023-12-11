@@ -25,6 +25,7 @@ with pkgs;
     bat
     zellij
     python311Packages.habitipy
+    translate-shell
 
   ];
 
