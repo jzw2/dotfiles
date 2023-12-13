@@ -26,6 +26,7 @@ with pkgs;
     zellij
     python311Packages.habitipy
     translate-shell
+    gitui # rust thing, seems beetter than lazygit
 
   ];
 
@@ -97,7 +98,7 @@ with pkgs;
 
                ] ;
 
-  latex = [ texlive.combined.scheme-medium texlab lua53Packages.digestif ] ;
+  latex = [ texlive.combined.scheme-full lua53Packages.digestif python3Packages.pyment ] ;
 
   applications = [ whatsapp-for-linux spotify discord
                    # minecraft # broken
@@ -118,6 +119,8 @@ with pkgs;
      pipewire
      dunst
      bluetuith
+      wl-clipboard
   ];
+
 
 }
