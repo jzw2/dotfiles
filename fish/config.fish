@@ -8,13 +8,17 @@ abbr -a org hx ~/org
 
 function today
     set today (date "+%Y-%m-%d")
+    set baseDir /home/john/org/roam/daily
     cd /home/john/org/
-    if test -e "roam/daily/$today.org"
-        hx "roam/daily/$today.org"
+    if test -e "$baseDir/$today.org"
+        hx "$baseDir/$today.org"
     else
         echo "Creating file for today: $today.org"
-        touch "roam/daily/$today.org"
-        echo -e "#+TITLE: $today\n\n* Journal\n\n* Tasks" > "roam/daily/$today.org"
-        hx "roam/daily/$today.org"
+        touch "$baseDir/$today.org"
+        echo -e "#+TITLE: $today\n\n* Journal\n\n* Tasks" > "$baseDir/$today.org"
+        hx "$baseDir/$today.org"
     end
+    # Remove old 'today' link if it exists and create a new soft link to the current 'today' file
+    rm -f "$baseDir/today"
+    ln -s "$baseDir/$today.org" "$baseDir/today"
 end
