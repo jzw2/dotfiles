@@ -1,7 +1,8 @@
 
 theme = "dracula_at_night"
+
 [editor]
-bufferline = "never"
+bufferline = "multiple"
 
 
 [editor.soft-wrap]

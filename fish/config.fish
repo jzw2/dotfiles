@@ -9,7 +9,7 @@ abbr -a org hx ~/org
 function today
     set today (date "+%Y-%m-%d")
     set baseDir /home/john/org/roam/daily
-    cd /home/john/org/
+    cd /home/john/org/roam
     if test -e "$baseDir/$today.org"
         hx "$baseDir/$today.org"
     else
