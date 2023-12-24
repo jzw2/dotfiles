@@ -129,7 +129,7 @@
           zstd
           sptlrx
           microsoft-edge
-          gnomeExtensions.appindicator
+          # gnomeExtensions.appindicator
 	  helix
                  ]; in
     (builtins.concatLists [
