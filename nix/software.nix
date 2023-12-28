@@ -40,7 +40,8 @@ with pkgs;
 
   ];
 
-  python = [
+  python = [ 
+    python3Packages.pylsp
     (
       python3.withPackages (pyPkgs: with pyPkgs; [
         noise
@@ -82,7 +83,13 @@ with pkgs;
 
   rustup
   ];
-  haskellPkgs = [ ghc hlint cabal-install haskellPackages.hoogle ];
+  haskellPkgs = [
+    ghc
+    hlint
+    cabal-install
+    haskellPackages.hoogle
+    haskell-language-server
+  ];
 
   shell = [ shellcheck ];
 
@@ -98,7 +105,12 @@ with pkgs;
 
                ] ;
 
-  latex = [ texlive.combined.scheme-full lua53Packages.digestif python3Packages.pyment ] ;
+  latex = [  
+     texlive.combined.scheme-full
+     lua53Packages.digestif
+     python3Packages.pyment
+     texlab # lsp
+   ] ;
 
   applications = [ whatsapp-for-linux spotify discord
                    # minecraft # broken

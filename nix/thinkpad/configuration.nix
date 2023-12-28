@@ -151,6 +151,16 @@
       extras
     ]) ;
 
+  xdg.mime.defaultApplications = {
+    
+  "application/pdf" = "zathura.desktop";
+                 "image/png" = [
+                   "sxiv.desktop"
+                   "gimp.desktop"
+             ];
+            
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
