@@ -105,8 +105,10 @@ with pkgs;
 
                ] ;
 
-  latex = [  
-     texlive.combined.scheme-full
+  latex = [
+     # deprecated
+     # texlive.combined.scheme-full
+     texliveFull.__overrideTeXConfig { withDocs = true; }
      lua53Packages.digestif
      python3Packages.pyment
      texlab # lsp
