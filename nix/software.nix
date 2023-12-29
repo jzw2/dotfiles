@@ -41,7 +41,7 @@ with pkgs;
   ];
 
   python = [ 
-    python3Packages.pylsp
+    python3Packages.python-lsp-server
     (
       python3.withPackages (pyPkgs: with pyPkgs; [
         noise
