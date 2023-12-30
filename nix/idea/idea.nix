@@ -128,7 +128,8 @@
           imagemagick
           zstd
           sptlrx
-          microsoft-edge
+          nyxt
+          zathura
           # gnomeExtensions.appindicator
 	  helix
                  ]; in
@@ -142,6 +143,8 @@
       software.latex
       software.applications
       software.hyprland
+      software.minimalApps
+
       extras
     ]) ;
 

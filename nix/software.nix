@@ -127,6 +127,10 @@ with pkgs;
         ];
     }) # use flatpak apparently is better
                  ] ;
+  minimalApps = [
+    zathura
+    nyxt  
+  ]; 
   hyprland = [ 
      wofi
      kitty
