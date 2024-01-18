@@ -144,6 +144,7 @@
       software.applications
       software.hyprland
       software.minimalApps
+      software.python
 
       extras
     ]) ;
@@ -170,7 +171,7 @@
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-  services.emacs.enable = true;
+  # services.emacs.enable = true;
   services.flatpak.enable = true;
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

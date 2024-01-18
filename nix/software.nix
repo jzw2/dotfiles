@@ -48,6 +48,7 @@ with pkgs;
         pillow
         matplotlib
         numpy
+        adblock
 
       (
         buildPythonPackage rec {
