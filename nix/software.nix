@@ -130,7 +130,10 @@ with pkgs;
                  ] ;
   minimalApps = [
     zathura
-    nyxt  
+    # nyxt  
+    qutebrowser
+    feh
+
   ]; 
   hyprland = [ 
      wofi
@@ -139,6 +142,9 @@ with pkgs;
      dunst
      bluetuith
       wl-clipboard
+
+      eww-wayland
+      libnotify
   ];
 
 
