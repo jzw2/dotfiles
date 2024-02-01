@@ -13,6 +13,7 @@ with pkgs;
     fd # find replacement
     sqlite # need it for org roam
     alacritty
+    selectdefaultapplication
     # tmux
   ];
 
@@ -49,7 +50,8 @@ with pkgs;
         matplotlib
         numpy
         adblock
-
+        requests
+        regex
       (
         buildPythonPackage rec {
           pname = "perlin_noise";
