@@ -60,11 +60,11 @@
   # };
 
   i18n.inputMethod = {
-    enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin rime ];
+    # enabled = "ibus";
+    # ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin rime ];
 
-    # enabled = "fcitx";
-    # fcitx.engines = with pkgs.fcitx-engines; [ hangul ];
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [ fcitx5-hangul fcitx5-chinese-addons ];
   };
 
   fonts = {
@@ -136,6 +136,8 @@
           stack
 
           gnome.pomodoro
+          gnomeExtensions.kimpanel
+          gnomeExtensions.paperwm
           # teams
                  ]; in
     (builtins.concatLists [
