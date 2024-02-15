@@ -138,6 +138,7 @@
           gnome.pomodoro
           gnomeExtensions.kimpanel
           gnomeExtensions.paperwm
+          emacs
           # teams
                  ]; in
     (builtins.concatLists [
@@ -181,7 +182,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.emacs.enable = true;
+  # services.emacs.enable = true;
   services.flatpak.enable = true;
   services.avahi.enable = false;
 
