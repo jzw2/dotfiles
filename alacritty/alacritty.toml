@@ -3,7 +3,6 @@ family = "Fira Code"
 
 [window]
 decorations = "full"
-gtk_theme_variant = "None"
 opacity = 0.9
 startup_mode = "Windowed"
 title = "Why this no work"
