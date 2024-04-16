@@ -126,6 +126,7 @@
     let software = ((import ../software.nix) pkgs); in
     with pkgs;
     let extras = [
+          warp-terminal
           swiProlog
           sd
           mu
