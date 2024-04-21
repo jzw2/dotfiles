@@ -128,7 +128,7 @@
           imagemagick
           zstd
           sptlrx
-          nyxt
+          # nyxt
           zathura
           # gnomeExtensions.appindicator
 	  helix
