@@ -115,7 +115,7 @@
    users.users.john = {
      isNormalUser = true;
      initialPassword = "";
-     extraGroups = [ "wheel" "networkmanager"]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "networkmanager" config.services.kubo.group ]; # Enable ‘sudo’ for the user.
    };
 
    users.defaultUserShell = pkgs.fish;
@@ -186,7 +186,7 @@
   # services.emacs.enable = true;
   services.flatpak.enable = true;
   services.avahi.enable = false;
-
+  services.kubo.enable = true;
 
   virtualisation.docker.enable = true;
 
