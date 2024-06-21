@@ -140,6 +140,7 @@
           gnomeExtensions.kimpanel
           gnomeExtensions.paperwm
           emacs
+          veracrypt
           # teams
                  ]; in
     (builtins.concatLists [
@@ -152,6 +153,7 @@
       software.applications
       software.cmdExtras
       software.python
+      software.hyprland
       extras
     ]) ;
 
@@ -174,6 +176,8 @@
   # };
   #
 
+  programs.hyprland.enable = true;
+  programs.waybar.enable = true;
   programs.fish.enable = true;
   programs.steam.enable = true;
   programs.neovim.enable = true;
@@ -187,6 +191,7 @@
   services.flatpak.enable = true;
   services.avahi.enable = false;
   services.kubo.enable = true;
+  services.pipewire.enable = true; # for hyprland
 
   virtualisation.docker.enable = true;
 

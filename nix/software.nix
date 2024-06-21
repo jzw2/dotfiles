@@ -28,7 +28,7 @@ with pkgs;
     python311Packages.habitipy
     translate-shell
     gitui # rust thing, seems beetter than lazygit
-
+    lagrange
   ];
 
 
@@ -45,6 +45,7 @@ with pkgs;
     python3Packages.python-lsp-server
     (
       python3.withPackages (pyPkgs: with pyPkgs; [
+        ipython
         noise
         pillow
         matplotlib
@@ -52,6 +53,7 @@ with pkgs;
         adblock
         requests
         regex
+        pandas
       (
         buildPythonPackage rec {
           pname = "perlin_noise";
@@ -113,7 +115,7 @@ with pkgs;
      # texlive.combined.scheme-full
 
     texliveFull
-    (texliveSmall.__overrideTeXConfig { withDocs = true; })
+    # (texliveSmall.__overrideTeXConfig { withDocs = true; })
      lua53Packages.digestif
      python3Packages.pyment
      texlab # lsp
@@ -124,31 +126,35 @@ with pkgs;
                    prismlauncher # minecraft
                    zoom-us
                    anki
-                    (lutris.override {
-        extraPkgs = pkgs: [
-            wineWowPackages.staging
-            winetricks
-            wineWowPackages.waylandFull
-        ];
-    }) # use flatpak apparently is better
+                  thunderbird
+        #             (lutris.override {
+        # extraPkgs = pkgs: [
+        #     wineWowPackages.staging
+        #     winetricks
+        #     wineWowPackages.waylandFull
+        # ];
+    # }) # use flatpak apparently is better
                  ] ;
   minimalApps = [
     zathura
     # nyxt  
     qutebrowser
     feh
+    lagrange
 
   ]; 
   hyprland = [ 
      wofi
+     anyrun # wofi unmaintained
      kitty
      pipewire
      dunst
      bluetuith
       wl-clipboard
 
-      eww-wayland
+      eww
       libnotify
+
   ];
 
 
