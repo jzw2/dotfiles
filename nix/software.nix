@@ -121,7 +121,9 @@ with pkgs;
      texlab # lsp
    ] ;
 
-  applications = [ whatsapp-for-linux spotify discord
+  applications = [ 
+  # whatsapp-for-linux  # this sucks
+  spotify discord
                    # minecraft # broken
                    prismlauncher # minecraft
                    zoom-us
