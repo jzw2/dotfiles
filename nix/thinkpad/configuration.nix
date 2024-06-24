@@ -4,7 +4,18 @@
 
 { config, pkgs, ... }:
 
-{
+let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
+    postInstall = p.postInstall or "" + ''
+      # Workaround for NixOS/nixpkgs#92265
+      mkdir --parents "$out/share/gnome-shell-extensions-46.2/glib-2.0"
+      ln --symbolic "$out/share/gnome-shell/extensions/pop-shell@system76.com/schemas" "$out/share/gnome-shell-extensions-46.2/glib-2.0/schemas"
+
+      # Workaround for NixOS/nixpkgs#314969
+      mkdir --parents "$out/share/gnome-control-center"
+      ln --symbolic "$src/keybindings" "$out/share/gnome-control-center/keybindings"
+    '';
+  })); in
+      {
 	imports =
 		[ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -78,7 +89,7 @@
       fira-code
       font-awesome
 
-      babelstone-han # yay I like archaick characters
+      # babelstone-han # yay I like archaick characters
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
@@ -95,7 +106,9 @@
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.gdm.debug = true;
-  
+  # Workaround for NixOS/nixpkgs#92265
+  services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
+
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -137,8 +150,10 @@
           stack
 
           gnome.pomodoro
-          gnomeExtensions.kimpanel
+          # I forgot what kimpanel is 
+          # gnomeExtensions.kimpanel
           gnomeExtensions.paperwm
+          pop_shell
           emacs
           veracrypt
           # teams
@@ -153,7 +168,7 @@
       software.applications
       software.cmdExtras
       software.python
-      software.hyprland
+      # software.hyprland
       extras
     ]) ;
 
