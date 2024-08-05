@@ -48,6 +48,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -103,11 +104,12 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   };
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.gnome.enable = false;
+  services.desktopManager.plasma6.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.gdm.debug = true;
   # Workaround for NixOS/nixpkgs#92265
-  services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
+  # services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
 
 
   # Configure keymap in X11
@@ -139,7 +141,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     let software = ((import ../software.nix) pkgs); in
     with pkgs;
     let extras = [
-          warp-terminal
+          warp-terminal # kind of slow
           swiProlog
           sd
           mu
@@ -193,7 +195,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   #
 
   programs.hyprland.enable = true;
-  programs.waybar.enable = true;
+  # programs.waybar.enable = true;
   programs.fish.enable = true;
   programs.steam.enable = true;
   programs.neovim.enable = true;
