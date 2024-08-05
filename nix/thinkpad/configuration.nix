@@ -149,14 +149,15 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
           microsoft-edge
           stack
 
-          gnome.pomodoro
+          # gnome.pomodoro
           # I forgot what kimpanel is 
           # gnomeExtensions.kimpanel
           gnomeExtensions.paperwm
           pop_shell
           emacs
-          veracrypt
+          veracrypt # I don't know what this is
           # teams
+          clang-tools
                  ]; in
     (builtins.concatLists [
       software.essential
@@ -174,12 +175,12 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
 
   xdg.mime.defaultApplications = {
     
-  "application/pdf" = "zathura.desktop";
-                 "image/png" = [
-                   "sxiv.desktop"
-                   "gimp.desktop"
-             ];
-            
+  # "application/pdf" = "zathura.desktop";
+  #                "image/png" = [
+  #                  "sxiv.desktop"
+  #                  "gimp.desktop"
+  #            ];
+
   };
 
   # Some programs need SUID wrappers, can be configured further or are
