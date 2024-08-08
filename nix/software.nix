@@ -21,7 +21,8 @@ with pkgs;
     helix
     wl-clipboard
     glances
-    neofetch # yes very essential
+    # neofetch # unmaintained
+    fastfetch
     sptlrx
     bat
     zellij

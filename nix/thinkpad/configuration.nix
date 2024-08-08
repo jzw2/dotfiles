@@ -120,7 +120,6 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   # services.printing.enable = true;
 
   # Enable sound.
-  sound.enable = true;
   hardware.pulseaudio.enable = true; # give me alsa?
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -160,6 +159,8 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
           veracrypt # I don't know what this is
           # teams
           clang-tools
+          (kdePackages.qtstyleplugin-kvantum)
+libsForQt5.qt5.qtgraphicaleffects
                  ]; in
     (builtins.concatLists [
       software.essential
