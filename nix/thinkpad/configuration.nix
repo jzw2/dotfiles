@@ -160,7 +160,12 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
           veracrypt # I don't know what this is
           # teams
           clang-tools
-          # bilibili
+          (bilibili.overrideAttrs(oldAttrs: rec {
+    src = fetchurl {
+      url = oldAttrs.src.url;
+      sha256 = "sha256-iflq6Rgj5PUvtIJ2FCBO4ki8Tf6LNHZrxKXKYjqD/Qo=";
+    };
+  }))
           (kdePackages.qtstyleplugin-kvantum)
 libsForQt5.qt5.qtgraphicaleffects
                  ]; in
