@@ -74,9 +74,10 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   i18n.inputMethod = {
     # enabled = "ibus";
     # ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin rime ];
-
-    enabled = "fcitx5";
+    enable = true;
+    type = "fcitx5";
     fcitx5.addons = with pkgs; [ fcitx5-hangul fcitx5-chinese-addons ];
+    fcitx5.plasma6Support = true;
   };
 
   fonts = {
@@ -159,7 +160,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
           veracrypt # I don't know what this is
           # teams
           clang-tools
-          bilibili
+          # bilibili
           (kdePackages.qtstyleplugin-kvantum)
 libsForQt5.qt5.qtgraphicaleffects
                  ]; in
