@@ -121,7 +121,8 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   # services.printing.enable = true;
 
   # Enable sound.
-  hardware.pulseaudio.enable = true; # give me alsa?
+  # hardware.pulseaudio.enable = true; # give me alsa?
+  # false is required with piepwire
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -142,7 +143,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     with pkgs;
     let extras = [
           warp-terminal # kind of slow
-          swiProlog
+          swi-prolog
           sd
           mu
           # lilypond-unstable
@@ -160,12 +161,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
           veracrypt # I don't know what this is
           # teams
           clang-tools
-          (bilibili.overrideAttrs(oldAttrs: rec {
-    src = fetchurl {
-      url = oldAttrs.src.url;
-      sha256 = "sha256-iflq6Rgj5PUvtIJ2FCBO4ki8Tf6LNHZrxKXKYjqD/Qo=";
-    };
-  }))
+          (bilibili)
           (kdePackages.qtstyleplugin-kvantum)
 libsForQt5.qt5.qtgraphicaleffects
                  ]; in

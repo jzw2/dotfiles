@@ -222,7 +222,7 @@ in {
   # Enable sound.
   sound.enable = true;
   sound.mediaKeys.enable = true;
-  hardware.pulseaudio.enable = true;
+  # hardware.pulseaudio.enable = true; # pipewire requires false
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.nvidiaSettings = true;
   hardware.nvidia.package =
