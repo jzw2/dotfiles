@@ -107,8 +107,11 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   services.xserver.enable = true;
   services.xserver.desktopManager.gnome.enable = false;
   services.desktopManager.plasma6.enable = true;
+  services.desktopManager.cosmic.enable = false;
+  
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.debug = true;
+  services.displayManager.cosmic-greeter.enable = false;
+  # services.xserver.displayManager.gdm.debug = true;
   # Workaround for NixOS/nixpkgs#92265
   # services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
 
@@ -142,7 +145,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     let software = ((import ../software.nix) pkgs); in
     with pkgs;
     let extras = [
-          warp-terminal # kind of slow
+          # warp-terminal # kind of slow
           swi-prolog
           sd
           mu
@@ -158,10 +161,12 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
           gnomeExtensions.paperwm
           pop_shell
           emacs
-          veracrypt # I don't know what this is
+      # veracrypt # I don't know what this is
+      # veracrypt is very slow to build
           # teams
           clang-tools
           (bilibili)
+          luarocks
           (kdePackages.qtstyleplugin-kvantum)
 libsForQt5.qt5.qtgraphicaleffects
                  ]; in
