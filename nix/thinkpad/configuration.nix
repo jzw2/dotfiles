@@ -106,11 +106,11 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
   services.xserver.desktopManager.gnome.enable = false;
-  services.desktopManager.plasma6.enable = true;
-  services.desktopManager.cosmic.enable = false;
+  services.desktopManager.plasma6.enable = false;
+  services.desktopManager.cosmic.enable = true;
   
-  services.xserver.displayManager.gdm.enable = true;
-  services.displayManager.cosmic-greeter.enable = false;
+  services.xserver.displayManager.gdm.enable = false;
+  services.displayManager.cosmic-greeter.enable = true;
   # services.xserver.displayManager.gdm.debug = true;
   # Workaround for NixOS/nixpkgs#92265
   # services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
@@ -167,6 +167,8 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
           clang-tools
           (bilibili)
           luarocks
+          yazi # file manager
+          wezterm # terminal
           (kdePackages.qtstyleplugin-kvantum)
 libsForQt5.qt5.qtgraphicaleffects
                  ]; in
