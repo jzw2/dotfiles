@@ -30,3 +30,4 @@ function today
     rm -f "$baseDir/today"
     ln -s "$baseDir/$today.org" "$baseDir/today"
 end
+zoxide init fish | source

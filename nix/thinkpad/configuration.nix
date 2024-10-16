@@ -145,9 +145,10 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     let software = ((import ../software.nix) pkgs); in
     with pkgs;
     let extras = [
+          zoxide # cd relacement
           # warp-terminal # kind of slow
           swi-prolog
-          sd
+          # sd # sed replacement, is not maintaind any more
           mu
           # lilypond-unstable
           imagemagick
