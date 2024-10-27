@@ -76,7 +76,10 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     # ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin rime ];
     enable = true;
     type = "fcitx5";
-    fcitx5.addons = with pkgs; [ fcitx5-hangul fcitx5-chinese-addons ];
+    fcitx5.addons = with pkgs; [ fcitx5-hangul 
+    fcitx5-chinese-addons 
+ fcitx5-mozc
+    ];
     fcitx5.plasma6Support = true;
   };
 
