@@ -89,7 +89,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
       siji # for bars or whatever
       jetbrains-mono
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       fira-code
       font-awesome
