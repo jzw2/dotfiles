@@ -76,9 +76,9 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     # ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin rime ];
     enable = true;
     type = "fcitx5";
-    fcitx5.addons = with pkgs; [ 
-    fcitx5-hangul 
-    fcitx5-chinese-addons 
+    fcitx5.addons = with pkgs; [
+    fcitx5-hangul
+    fcitx5-chinese-addons
      fcitx5-mozc
     ];
     # fcitx5.plasma6Support = true;
@@ -112,7 +112,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   services.xserver.desktopManager.gnome.enable = false;
   services.desktopManager.plasma6.enable = false;
   services.desktopManager.cosmic.enable = true;
-  
+
   services.xserver.displayManager.gdm.enable = false;
   services.displayManager.cosmic-greeter.enable = true;
   # services.xserver.displayManager.gdm.debug = true;
@@ -149,6 +149,8 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     let software = ((import ../software.nix) pkgs); in
     with pkgs;
     let extras = [
+    zed-editor
+    zoxide
           zoxide # cd relacement
           # warp-terminal # kind of slow
           swi-prolog
@@ -161,7 +163,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
           stack
 
           # gnome.pomodoro
-          # I forgot what kimpanel is 
+          # I forgot what kimpanel is
           # gnomeExtensions.kimpanel
           gnomeExtensions.paperwm
           pop_shell
@@ -192,7 +194,7 @@ libsForQt5.qt5.qtgraphicaleffects
     ]) ;
 
   xdg.mime.defaultApplications = {
-    
+
   # "application/pdf" = "zathura.desktop";
   #                "image/png" = [
   #                  "sxiv.desktop"
@@ -244,4 +246,3 @@ libsForQt5.qt5.qtgraphicaleffects
   system.stateVersion = "20.09"; # Did you read the comment?
 
 }
-
