@@ -149,6 +149,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     let software = ((import ../software.nix) pkgs); in
     with pkgs;
     let extras = [
+    nixd
     zed-editor
     zoxide
           zoxide # cd relacement
@@ -172,7 +173,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
       # veracrypt is very slow to build
           # teams
           clang-tools
-          (bilibili)
+          # (bilibili) # error with electron too old
           luarocks
           yazi # file manager
           wezterm # terminal
