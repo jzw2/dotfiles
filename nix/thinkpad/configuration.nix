@@ -80,6 +80,7 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     fcitx5-hangul
     fcitx5-chinese-addons
      fcitx5-mozc
+     fcitx5-table-extra
     ];
     # fcitx5.plasma6Support = true;
   };
@@ -109,12 +110,12 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   };
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
-  services.xserver.desktopManager.gnome.enable = false;
+  services.xserver.desktopManager.gnome.enable = true;
   services.desktopManager.plasma6.enable = false;
   services.desktopManager.cosmic.enable = true;
 
-  services.xserver.displayManager.gdm.enable = false;
-  services.displayManager.cosmic-greeter.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.displayManager.cosmic-greeter.enable = false;
   # services.xserver.displayManager.gdm.debug = true;
   # Workaround for NixOS/nixpkgs#92265
   # services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
