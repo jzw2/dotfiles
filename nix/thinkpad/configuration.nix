@@ -97,8 +97,9 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
       font-awesome
 
       # babelstone-han # yay I like archaick characters
-      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-    ];
+
+ nerd-fonts.fira-code 
+   ];
 
     fontconfig = {
       defaultFonts = {
@@ -150,6 +151,8 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     let software = ((import ../software.nix) pkgs); in
     with pkgs;
     let extras = [
+    yt-dlp
+    mpv
     nixd
     zed-editor
     zoxide
