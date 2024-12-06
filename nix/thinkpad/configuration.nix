@@ -115,8 +115,8 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   services.desktopManager.plasma6.enable = false;
   services.desktopManager.cosmic.enable = true;
 
-  services.xserver.displayManager.gdm.enable = true;
-  services.displayManager.cosmic-greeter.enable = false;
+  services.xserver.displayManager.gdm.enable = false;
+  services.displayManager.cosmic-greeter.enable = true;
   # services.xserver.displayManager.gdm.debug = true;
   # Workaround for NixOS/nixpkgs#92265
   # services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
