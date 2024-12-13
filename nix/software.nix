@@ -42,7 +42,7 @@ with pkgs;
 
   ];
 
-  python = [ 
+  python = [
     python3Packages.python-lsp-server
     (
       python3.withPackages (pyPkgs: with pyPkgs; [
@@ -122,9 +122,11 @@ with pkgs;
      texlab # lsp
    ] ;
 
-  applications = [ 
+  applications = [
   # whatsapp-for-linux  # this sucks
-  spotify discord
+  spotify #
+  # discord # discord screenshare doesn't work
+  vesktop
                    # minecraft # broken
                    prismlauncher # minecraft
                    zoom-us
@@ -140,13 +142,13 @@ with pkgs;
                  ] ;
   minimalApps = [
     zathura
-    # nyxt  
+    # nyxt
     qutebrowser
     feh
     lagrange
 
-  ]; 
-  hyprland = [ 
+  ];
+  hyprland = [
      wofi
      anyrun # wofi unmaintained
      kitty
