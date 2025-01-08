@@ -1,6 +1,4 @@
-pkgs :
-with pkgs;
-{
+pkgs: with pkgs; {
   essential = [
     neovim
     pandoc
@@ -32,7 +30,6 @@ with pkgs;
     lagrange
   ];
 
-
   cTools = [
     cmake
     gcc
@@ -44,8 +41,8 @@ with pkgs;
 
   python = [
     python3Packages.python-lsp-server
-    (
-      python3.withPackages (pyPkgs: with pyPkgs; [
+    (python3.withPackages (
+      pyPkgs: with pyPkgs; [
         ipython
         noise
         pillow
@@ -55,8 +52,7 @@ with pkgs;
         requests
         regex
         pandas
-      (
-        buildPythonPackage rec {
+        (buildPythonPackage rec {
           pname = "perlin_noise";
           version = "1.12";
           src = fetchPypi {
@@ -68,26 +64,24 @@ with pkgs;
             # Specify dependencies
             # pkgs.python3Packages.numpy
           ];
-        }
-      )
+        })
       ]
-      )
-    )
+    ))
   ];
 
   rust = [
 
-  # clippy
-  # cargo
-  # rustc
-  # rustup
-  # racer
+    # clippy
+    # cargo
+    # rustc
+    # rustup
+    # racer
 
-  # rust-analyzer
+    # rust-analyzer
 
-  # rustfmt
+    # rustfmt
 
-  rustup
+    rustup
   ];
   haskellPkgs = [
     ghc
@@ -106,40 +100,43 @@ with pkgs;
   ];
   nix = [ nixfmt ];
 
-  purescript = [ purescript spago esbuild
-               #   nodejs
+  purescript = [
+    purescript
+    spago
+    esbuild
+    #   nodejs
 
-               ] ;
+  ];
 
   latex = [
-     # deprecated
-     # texlive.combined.scheme-full
+    # deprecated
+    # texlive.combined.scheme-full
 
     texliveFull
     # (texliveSmall.__overrideTeXConfig { withDocs = true; })
-     lua53Packages.digestif
-     python3Packages.pyment
-     texlab # lsp
-   ] ;
+    lua53Packages.digestif
+    python3Packages.pyment
+    texlab # lsp
+  ];
 
   applications = [
-  # whatsapp-for-linux  # this sucks
-  spotify #
-  # discord # discord screenshare doesn't work
-  vesktop
-                   # minecraft # broken
-                   prismlauncher # minecraft
-                   zoom-us
-                   anki
-                  thunderbird
-        #             (lutris.override {
-        # extraPkgs = pkgs: [
-        #     wineWowPackages.staging
-        #     winetricks
-        #     wineWowPackages.waylandFull
-        # ];
+    # whatsapp-for-linux  # this sucks
+    spotify
+    # discord # discord screenshare doesn't work
+    vesktop
+    # minecraft # broken
+    prismlauncher # minecraft
+    zoom-us
+    anki
+    thunderbird
+    #             (lutris.override {
+    # extraPkgs = pkgs: [
+    #     wineWowPackages.staging
+    #     winetricks
+    #     wineWowPackages.waylandFull
+    # ];
     # }) # use flatpak apparently is better
-                 ] ;
+  ];
   minimalApps = [
     zathura
     # nyxt
@@ -149,18 +146,17 @@ with pkgs;
 
   ];
   hyprland = [
-     wofi
-     anyrun # wofi unmaintained
-     kitty
-     pipewire
-     dunst
-     bluetuith
-      wl-clipboard
+    wofi
+    anyrun # wofi unmaintained
+    kitty
+    pipewire
+    dunst
+    bluetuith
+    wl-clipboard
 
-      eww
-      libnotify
+    eww
+    libnotify
 
   ];
-
 
 }

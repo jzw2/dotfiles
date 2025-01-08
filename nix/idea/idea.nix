@@ -5,15 +5,15 @@
 { config, pkgs, ... }:
 
 {
-	imports =
-		[ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
-        experimental-features = nix-command flakes
+      experimental-features = nix-command flakes
     '';
     gc = {
       automatic = true;
@@ -31,7 +31,6 @@
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
   # Define on which hard drive you want to install Grub.
   # boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
-
 
   boot.loader.systemd-boot.enable = true;
 
@@ -78,7 +77,10 @@
     fontconfig = {
       defaultFonts = {
         serif = [ "Noto Serif" ];
-        sansSerif = [ "Noto Sans" "Noto Sans CJK SC" ];
+        sansSerif = [
+          "Noto Sans"
+          "Noto Sans CJK SC"
+        ];
         monospace = [ "Noto Mono" ];
       };
     };
@@ -89,7 +91,6 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.gdm.debug = true;
   services.gnome.gnome-keyring.enable = true;
-  
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -106,33 +107,40 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.john = {
-     isNormalUser = true;
-     initialPassword = "";
-     extraGroups = [ "wheel" "networkmanager"]; # Enable ‘sudo’ for the user.
-   };
+  users.users.john = {
+    isNormalUser = true;
+    initialPassword = "";
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ]; # Enable ‘sudo’ for the user.
+  };
 
-   users.defaultUserShell = pkgs.fish;
+  users.defaultUserShell = pkgs.fish;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages =
-    let software = ((import ../software.nix) pkgs); in
+    let
+      software = ((import ../software.nix) pkgs);
+    in
     with pkgs;
-    let extras = [
-          # steam-tui # the nixpkgs one is outdated and broken
-          steamPackages.steamcmd
-          swiProlog
-          bat
-          sd
-          imagemagick
-          zstd
-          sptlrx
-          # nyxt
-          zathura
-          # gnomeExtensions.appindicator
-	  helix
-                 ]; in
+    let
+      extras = [
+        # steam-tui # the nixpkgs one is outdated and broken
+        steamPackages.steamcmd
+        swiProlog
+        bat
+        sd
+        imagemagick
+        zstd
+        sptlrx
+        # nyxt
+        zathura
+        # gnomeExtensions.appindicator
+        helix
+      ];
+    in
     (builtins.concatLists [
       software.essential
       software.cmdExtras
@@ -147,7 +155,7 @@
       software.python
 
       extras
-    ]) ;
+    ]);
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -188,4 +196,3 @@
   system.stateVersion = "20.09"; # Did you read the comment?
 
 }
-

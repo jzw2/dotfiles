@@ -4,29 +4,35 @@
 
 { config, pkgs, ... }:
 
-let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
-    postInstall = p.postInstall or "" + ''
-      # Workaround for NixOS/nixpkgs#92265
-      mkdir --parents "$out/share/gnome-shell-extensions-46.2/glib-2.0"
-      ln --symbolic "$out/share/gnome-shell/extensions/pop-shell@system76.com/schemas" "$out/share/gnome-shell-extensions-46.2/glib-2.0/schemas"
+let
+  pop_shell = (
+    pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
+      postInstall =
+        p.postInstall or ""
+        + ''
+          # Workaround for NixOS/nixpkgs#92265
+          mkdir --parents "$out/share/gnome-shell-extensions-46.2/glib-2.0"
+          ln --symbolic "$out/share/gnome-shell/extensions/pop-shell@system76.com/schemas" "$out/share/gnome-shell-extensions-46.2/glib-2.0/schemas"
 
-      # Workaround for NixOS/nixpkgs#314969
-      mkdir --parents "$out/share/gnome-control-center"
-      ln --symbolic "$src/keybindings" "$out/share/gnome-control-center/keybindings"
-    '';
-  })); in
-      {
-	imports =
-		[ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+          # Workaround for NixOS/nixpkgs#314969
+          mkdir --parents "$out/share/gnome-control-center"
+          ln --symbolic "$src/keybindings" "$out/share/gnome-control-center/keybindings"
+        '';
+    })
+  );
+in
+{
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   nix = {
     # package = pkgs.nixFlakes;
     extraOptions = ''
-        experimental-features = nix-command flakes
-        extra-substituters = https://devenv.cachix.org
-        extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
+      experimental-features = nix-command flakes
+      extra-substituters = https://devenv.cachix.org
+      extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
     '';
     gc = {
       automatic = true;
@@ -44,7 +50,6 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
   # Define on which hard drive you want to install Grub.
   # boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
-
 
   boot.loader.systemd-boot.enable = true;
 
@@ -79,10 +84,10 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
     enable = true;
     type = "fcitx5";
     fcitx5.addons = with pkgs; [
-    fcitx5-hangul
-    fcitx5-chinese-addons
-     fcitx5-mozc
-     fcitx5-table-extra
+      fcitx5-hangul
+      fcitx5-chinese-addons
+      fcitx5-mozc
+      fcitx5-table-extra
     ];
     # fcitx5.plasma6Support = true;
   };
@@ -100,13 +105,16 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
 
       # babelstone-han # yay I like archaick characters
 
- nerd-fonts.fira-code 
-   ];
+      nerd-fonts.fira-code
+    ];
 
     fontconfig = {
       defaultFonts = {
         serif = [ "Noto Serif" ];
-        sansSerif = [ "Noto Sans" "Noto Sans CJK SC" ];
+        sansSerif = [
+          "Noto Sans"
+          "Noto Sans CJK SC"
+        ];
         monospace = [ "Noto Mono" ];
       };
     };
@@ -123,7 +131,6 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   # Workaround for NixOS/nixpkgs#92265
   # services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
 
-
   # Configure keymap in X11
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
@@ -139,55 +146,63 @@ let pop_shell = (pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.john = {
-     isNormalUser = true;
-     initialPassword = "";
-     extraGroups = [ "wheel" "networkmanager" config.services.kubo.group ]; # Enable ‘sudo’ for the user.
-   };
+  users.users.john = {
+    isNormalUser = true;
+    initialPassword = "";
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      config.services.kubo.group
+    ]; # Enable ‘sudo’ for the user.
+  };
 
-   users.defaultUserShell = pkgs.fish;
+  users.defaultUserShell = pkgs.fish;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-    environment.systemPackages =
-    let software = ((import ../software.nix) pkgs); in
+  environment.systemPackages =
+    let
+      software = ((import ../software.nix) pkgs);
+    in
     with pkgs;
-    let extras = [
-    yt-dlp
-    mpv
-    nixd
-    zed-editor
-    zoxide
-          zoxide # cd relacement
-          # warp-terminal # kind of slow
-          swi-prolog
-          # sd # sed replacement, is not maintaind any more
-          mu
-          # lilypond-unstable
-          imagemagick
-          zstd
-          microsoft-edge
-          stack
+    let
+      extras = [
+        yt-dlp
+        mpv
+        nixd
+        zed-editor
+        zoxide
+        zoxide # cd relacement
+        # warp-terminal # kind of slow
+        swi-prolog
+        # sd # sed replacement, is not maintaind any more
+        mu
+        # lilypond-unstable
+        imagemagick
+        zstd
+        microsoft-edge
+        stack
 
-          # gnome.pomodoro
-          # I forgot what kimpanel is
-          # gnomeExtensions.kimpanel
-          gnomeExtensions.paperwm
-          pop_shell
-          emacs
-      # veracrypt # I don't know what this is
-      # veracrypt is very slow to build
-          # teams
-          clang-tools
-          # (bilibili) # error with electron too old
-          luarocks
-          yazi # file manager
-          wezterm # terminal
+        # gnome.pomodoro
+        # I forgot what kimpanel is
+        # gnomeExtensions.kimpanel
+        gnomeExtensions.paperwm
+        pop_shell
+        emacs
+        # veracrypt # I don't know what this is
+        # veracrypt is very slow to build
+        # teams
+        clang-tools
+        # (bilibili) # error with electron too old
+        luarocks
+        yazi # file manager
+        wezterm # terminal
 
         nixfmt-rfc-style # formatter
-          (kdePackages.qtstyleplugin-kvantum)
-libsForQt5.qt5.qtgraphicaleffects
-                 ]; in
+        (kdePackages.qtstyleplugin-kvantum)
+        libsForQt5.qt5.qtgraphicaleffects
+      ];
+    in
     (builtins.concatLists [
       software.essential
       software.haskellPkgs
@@ -200,15 +215,15 @@ libsForQt5.qt5.qtgraphicaleffects
       software.python
       # software.hyprland
       extras
-    ]) ;
+    ]);
 
   xdg.mime.defaultApplications = {
 
-  # "application/pdf" = "zathura.desktop";
-  #                "image/png" = [
-  #                  "sxiv.desktop"
-  #                  "gimp.desktop"
-  #            ];
+    # "application/pdf" = "zathura.desktop";
+    #                "image/png" = [
+    #                  "sxiv.desktop"
+    #                  "gimp.desktop"
+    #            ];
 
   };
 

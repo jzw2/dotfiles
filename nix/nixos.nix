@@ -6,8 +6,8 @@
 { config, pkgs, ... }:
 with pkgs;
 let
-  my-python-packages = python-packages:
-    with python-packages; [
+  my-python-packages =
+    python-packages: with python-packages; [
       pyflakes
       pandas
       requests
@@ -18,23 +18,27 @@ let
     ];
   python-with-my-packages = python3.withPackages my-python-packages;
   nixos-master = fetchFromGitHub {
-          owner = "NixOS";
-          repo = "nixpkgs";
-          rev = "b9234e3dfc1b597b3217b779f72559a921c91fb6";
-          sha256 = "sha256-9n0TTUf3xu4X/9Wr9+BXo4W08GD2o0g2NfcP+fW0HJc=";
+    owner = "NixOS";
+    repo = "nixpkgs";
+    rev = "b9234e3dfc1b597b3217b779f72559a921c91fb6";
+    sha256 = "sha256-9n0TTUf3xu4X/9Wr9+BXo4W08GD2o0g2NfcP+fW0HJc=";
   };
-in {
-  imports = [ # Include the results of the hardware scan.
+in
+{
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./cachix.nix
   ];
 
   nixpkgs.overlays = [
-    (import (builtins.fetchGit {
-      url = "https://github.com/nix-community/emacs-overlay.git";
-      ref = "master";
-      rev = "c98ad03b2201e17f590b6a3ec84a1c5e4722eb09";
-    }))
+    (import (
+      builtins.fetchGit {
+        url = "https://github.com/nix-community/emacs-overlay.git";
+        ref = "master";
+        rev = "c98ad03b2201e17f590b6a3ec84a1c5e4722eb09";
+      }
+    ))
     (self: super: {
       leftwm = super.leftwm.overrideAttrs (old: rec {
         name = "leftwm";
@@ -46,11 +50,13 @@ in {
           sha256 = "sha256-vzA+5ijIJ5HywoftNONAOcPWTCVWiKzi0PCu2q6913E=";
         };
 
-        cargoDeps = old.cargoDeps.overrideAttrs (super.lib.const {
-          name = "${name}-vendor.tar.gz";
-          inherit src;
-          outputHash = "sha256-ucPSgTKBFMDOao45nPv5PJVmiJ71UBYvDg8alX8diLk=";
-        });
+        cargoDeps = old.cargoDeps.overrideAttrs (
+          super.lib.const {
+            name = "${name}-vendor.tar.gz";
+            inherit src;
+            outputHash = "sha256-ucPSgTKBFMDOao45nPv5PJVmiJ71UBYvDg8alX8diLk=";
+          }
+        );
       });
     })
     (self: super: {
@@ -81,7 +87,10 @@ in {
     fontconfig = {
       defaultFonts = {
         serif = [ "Noto Serif" ];
-        sansSerif = [ "Noto Sans" "Noto Sans CJK SC" ];
+        sansSerif = [
+          "Noto Sans"
+          "Noto Sans CJK SC"
+        ];
         monospace = [ "Noto Mono" ];
       };
     };
@@ -162,12 +171,12 @@ in {
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
-        extraPackages =
-          hpkgs: [ # Open configuration for additional Haskell packages.
-            hpkgs.xmonad-contrib # Install xmonad-contrib.
-            hpkgs.xmonad-extras # Install xmonad-extras.
-            hpkgs.xmonad # Install xmonad itself.
-          ];
+        extraPackages = hpkgs: [
+          # Open configuration for additional Haskell packages.
+          hpkgs.xmonad-contrib # Install xmonad-contrib.
+          hpkgs.xmonad-extras # Install xmonad-extras.
+          hpkgs.xmonad # Install xmonad itself.
+        ];
       };
       windowManager.leftwm.enable = true;
 
@@ -201,7 +210,10 @@ in {
 
   i18n.inputMethod = {
     enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin ];
+    ibus.engines = with pkgs.ibus-engines; [
+      hangul
+      libpinyin
+    ];
 
     # enabled = "fcitx";
     fcitx.engines = with pkgs.fcitx-engines; [ hangul ];
@@ -225,11 +237,10 @@ in {
   # hardware.pulseaudio.enable = true; # pipewire requires false
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.nvidiaSettings = true;
-  hardware.nvidia.package =
-    config.boot.kernelPackages.nvidiaPackages.legacy_470;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
 
-
-  environment.systemPackages = with pkgs;
+  environment.systemPackages =
+    with pkgs;
     let
       cTools = [
         cmake
@@ -250,21 +261,31 @@ in {
         python39Packages.pyflakes
       ];
 
-      rust = [ clippy cargo # rustc
-               rustup
-               racer rust-analyzer rustfmt ];
-      haskell = [ ghc hlint cabal-install haskellPackages.hoogle ];
+      rust = [
+        clippy
+        cargo # rustc
+        rustup
+        racer
+        rust-analyzer
+        rustfmt
+      ];
+      haskell = [
+        ghc
+        hlint
+        cabal-install
+        haskellPackages.hoogle
+      ];
 
       shell = [ shellcheck ];
 
       json = [ jq ];
 
-      ruby = [ # ruby
+      ruby = [
+        # ruby
       ];
       nix = [ nixfmt ];
 
-      allLanguages = cTools ++ python ++ rust ++ haskell ++ shell ++ json
-        ++ ruby ++ nix;
+      allLanguages = cTools ++ python ++ rust ++ haskell ++ shell ++ json ++ ruby ++ nix;
 
       gnome = [
         #gnome
@@ -285,41 +306,54 @@ in {
         pantheon.wingpanel
         #
       ];
-      customWM = [ feh picom rofi wmctrl polybarFull ];
-      programs =
-        let music = [spotify spotify-tui
-                     spotifyd
-                sptlrx
-                    ];
-            gaming = [
-
-        lutris
-        minecraft
-        runelite
-            ];
-            communication = [
-
-        discord
-        zoom-us
-        slack
-            ]; in
-
-              music ++ gaming ++ communication ++ [
-        # anki # this anki is out of date
-        # adobe-reader # for some reason this is "dangerous"
-        anki-bin
-        audacity
-        bitwarden
-        brave
-        # firefox
-        lyrebird
-        mpv # I don't know what this is actually
-        thunderbird
-
-        coq
-        isabelle
-        lean
+      customWM = [
+        feh
+        picom
+        rofi
+        wmctrl
+        polybarFull
       ];
+      programs =
+        let
+          music = [
+            spotify
+            spotify-tui
+            spotifyd
+            sptlrx
+          ];
+          gaming = [
+
+            lutris
+            minecraft
+            runelite
+          ];
+          communication = [
+
+            discord
+            zoom-us
+            slack
+          ];
+        in
+
+        music
+        ++ gaming
+        ++ communication
+        ++ [
+          # anki # this anki is out of date
+          # adobe-reader # for some reason this is "dangerous"
+          anki-bin
+          audacity
+          bitwarden
+          brave
+          # firefox
+          lyrebird
+          mpv # I don't know what this is actually
+          thunderbird
+
+          coq
+          isabelle
+          lean
+        ];
       cmdTools = [
 
         ccze # log colorizer
@@ -355,7 +389,13 @@ in {
         wget
         zoxide
       ];
-    in development ++ programs ++ allLanguages ++ cmdTools ++ customWM ++ [
+    in
+    development
+    ++ programs
+    ++ allLanguages
+    ++ cmdTools
+    ++ customWM
+    ++ [
       # development
 
       # working with Krist
