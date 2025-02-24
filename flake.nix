@@ -4,7 +4,8 @@
 
   inputs = {
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
-    nixpkgs.follows = "nixos-cosmic/nixpkgs"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable NixOS release
+    # nixpkgs.follows = "nixos-cosmic/nixpkgs"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable NixOS release
+    nixpkgs.url= "nixpkgs/nixos-unstable";
 
     # nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2405.0";
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";

@@ -174,8 +174,7 @@ in
         # play-with-mpv
         (mpv.override { scripts = [mpvScripts.youtube-upnext]; })
         nixd
-        # zed-editor # cache broken
-        zoxide
+        zed-editor # cache broken
         zoxide # cd relacement
         # warp-terminal # kind of slow
         swi-prolog
