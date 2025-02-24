@@ -168,6 +168,9 @@ in
     with pkgs;
     let
       extras = [
+        whitesur-cursors
+        whitesur-icon-theme
+        whitesur-gtk-theme
         kdePackages.xdg-desktop-portal-kde
         
         yt-dlp
