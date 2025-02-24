@@ -33,7 +33,6 @@ in
       experimental-features = nix-command flakes
       extra-substituters = https://devenv.cachix.org
       extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
-
       trusted-users = root john
     '';
     gc = {
@@ -125,7 +124,7 @@ in
   services.xserver.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.desktopManager.plasma6.enable = false;
-  services.desktopManager.cosmic.enable = true;
+  # services.desktopManager.cosmic.enable = true;
 
   services.xserver.displayManager.gdm.enable = false;
   services.displayManager.cosmic-greeter.enable = true;
@@ -169,10 +168,13 @@ in
     with pkgs;
     let
       extras = [
+        kdePackages.xdg-desktop-portal-kde
+        
         yt-dlp
-        mpv
+        # play-with-mpv
+        (mpv.override { scripts = [mpvScripts.youtube-upnext]; })
         nixd
-        zed-editor
+        # zed-editor # cache broken
         zoxide
         zoxide # cd relacement
         # warp-terminal # kind of slow
@@ -201,6 +203,7 @@ in
         wezterm # terminal
 
         nixfmt-rfc-style # formatter
+        devenv # dev enviormnets
         (kdePackages.qtstyleplugin-kvantum)
         libsForQt5.qt5.qtgraphicaleffects
       ];
@@ -227,9 +230,10 @@ in
     #                  "gimp.desktop"
     #            ];
 
-  };
-
   # Some programs need SUID wrappers, can be configured further or are
+  };
+  xdg.portal.enable = true;
+
   # started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
