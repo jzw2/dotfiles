@@ -193,6 +193,9 @@ in
         # I forgot what kimpanel is
         # gnomeExtensions.kimpanel
         gnomeExtensions.paperwm
+        gnomeExtensions.dock-from-dash
+        gnomeExtensions.blur-my-shell
+        gnomeExtensions.just-perfection
         pop_shell
         emacs
         # veracrypt # I don't know what this is
