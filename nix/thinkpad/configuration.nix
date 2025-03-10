@@ -33,13 +33,13 @@ in
       experimental-features = nix-command flakes
       extra-substituters = https://devenv.cachix.org
       extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
-      trusted-users = root john
     '';
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
+    settings.trusted-users = [ "root" "john" ];
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -196,7 +196,9 @@ in
         gnomeExtensions.dock-from-dash
         gnomeExtensions.blur-my-shell
         gnomeExtensions.just-perfection
-        pop_shell
+        gnomeExtensions.logo-menu
+        gnomeExtensions.top-bar-organizer
+        # pop_shell # bad
         emacs
         # veracrypt # I don't know what this is
         # veracrypt is very slow to build
