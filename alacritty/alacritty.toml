@@ -6,3 +6,8 @@ decorations = "full"
 opacity = 0.9
 startup_mode = "Windowed"
 title = "Why this no work"
+
+ [keyboard]
+bindings = [
+  { key = "N", mods = "Control|Shift", action = "CreateNewWindow" }
+]
