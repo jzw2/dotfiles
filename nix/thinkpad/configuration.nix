@@ -126,8 +126,8 @@ in
   services.desktopManager.plasma6.enable = false;
   # services.desktopManager.cosmic.enable = true;
 
-  services.xserver.displayManager.gdm.enable = false;
-  services.displayManager.cosmic-greeter.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  # services.displayManager.cosmic-greeter.enable = true;
   # services.xserver.displayManager.gdm.debug = true;
   # Workaround for NixOS/nixpkgs#92265
   # services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
@@ -198,6 +198,7 @@ in
         gnomeExtensions.just-perfection
         gnomeExtensions.logo-menu
         gnomeExtensions.top-bar-organizer
+        gnome-pomodoro
         # pop_shell # bad
         emacs
         # veracrypt # I don't know what this is
@@ -249,7 +250,15 @@ in
   # };
   #
 
+  # zed stopped working after I enabled this
+  # programs.nix-ld.enable = true;
+
+  programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged programs
+    # here, NOT in environment.systemPackages
+  ];
   programs.hyprland.enable = true;
+
   # programs.waybar.enable = true;
   programs.fish.enable = true;
   programs.steam.enable = true;

@@ -3,7 +3,7 @@
   description = "My configurations";
 
   inputs = {
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
+    # determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
     # nixpkgs.follows = "nixos-cosmic/nixpkgs"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable NixOS release
     nixpkgs.url= "nixpkgs/nixos-unstable";
 
@@ -16,7 +16,7 @@
       self,
       nixpkgs,
       nixos-cosmic,
-      determinate,
+      # determinate,
     }:
     {
       nixosConfigurations = {
@@ -42,7 +42,7 @@
               };
             }
             nixos-cosmic.nixosModules.default
-            determinate.nixosModules.default
+            # determinate.nixosModules.default
             ./nix/thinkpad/configuration.nix
           ];
         };
