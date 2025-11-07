@@ -4,23 +4,6 @@
 
 { config, pkgs, ... }:
 
-let
-  pop_shell = (
-    pkgs.gnomeExtensions.pop-shell.overrideAttrs (p: {
-      postInstall =
-        p.postInstall or ""
-        + ''
-          # Workaround for NixOS/nixpkgs#92265
-          mkdir --parents "$out/share/gnome-shell-extensions-46.2/glib-2.0"
-          ln --symbolic "$out/share/gnome-shell/extensions/pop-shell@system76.com/schemas" "$out/share/gnome-shell-extensions-46.2/glib-2.0/schemas"
-
-          # Workaround for NixOS/nixpkgs#314969
-          mkdir --parents "$out/share/gnome-control-center"
-          ln --symbolic "$src/keybindings" "$out/share/gnome-control-center/keybindings"
-        '';
-    })
-  );
-in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -40,19 +23,30 @@ in
       options = "--delete-older-than 30d";
     };
     settings.trusted-users = [ "root" "john" ];
+
+    settings.trusted-substituters = [ "https://cache.flox.dev" ];
+    settings.trusted-public-keys = [
+      "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
+       ];
+
   };
 
   nixpkgs.config.allowUnfree = true;
+
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # boot.loader.limine.enable = true;
+    
   # Use the GRUB 2 boot loader.
-  # boot.loader.grub.enable = true;
-  # boot.loader.grub.version = 2;
-  # boot.loader.grub.efiSupport = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.efiSupport = true;
   # boot.loader.grub.efiInstallAsRemovable = true;
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
   # Define on which hard drive you want to install Grub.
-  # boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
+   boot.loader.grub.device = "nodev"; # or "nodev" for efi only
+   boot.loader.grub.useOSProber = false;
 
-  boot.loader.systemd-boot.enable = true;
+  # boot.loader.systemd-boot.enable = true;
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -82,13 +76,15 @@ in
   i18n.inputMethod = {
     # enabled = "ibus";
     # ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin rime ];
-    enable = true;
+    enable = false;
+    fcitx5.waylandFrontend = true;
     type = "fcitx5";
     fcitx5.addons = with pkgs; [
-      fcitx5-hangul
+      # fcitx5-gtk
+      # fcitx5-hangul
       fcitx5-chinese-addons
-      fcitx5-mozc
-      fcitx5-table-extra
+      # fcitx5-mozc
+      # fcitx5-table-extra
     ];
     # fcitx5.plasma6Support = true;
   };
@@ -96,17 +92,18 @@ in
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      siji # for bars or whatever
-      jetbrains-mono
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-      fira-code
-      font-awesome
+      # siji # for bars or whatever
+       jetbrains-mono
+       noto-fonts
+       noto-fonts-cjk-sans
+       # noto-fonts-emoji
+       fira-code
+       font-awesome
+       newcomputermodern
 
       # babelstone-han # yay I like archaick characters
 
-      nerd-fonts.fira-code
+       nerd-fonts.fira-code
     ];
 
     fontconfig = {
@@ -119,13 +116,23 @@ in
         monospace = [ "Noto Mono" ];
       };
     };
+
+
+    
+  };
+  services.syncthing = {
+    enable = true;
+    group = "users";
+    user = "john";
+    dataDir = "/home/john/";
   };
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  services.desktopManager.plasma6.enable = false;
+  # services.desktopManager.plasma6.enable = false;
   # services.desktopManager.cosmic.enable = true;
 
+  # services.displayManager.gdm.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   # services.displayManager.cosmic-greeter.enable = true;
   # services.xserver.displayManager.gdm.debug = true;
@@ -140,11 +147,11 @@ in
   # services.printing.enable = true;
 
   # Enable sound.
-  # hardware.pulseaudio.enable = true; # give me alsa?
-  # false is required with piepwire
+  # hardware.pulseaudio.enable = true; # give me alsa?  # false is required with piepwire
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+  services.fprintd.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.john = {
@@ -168,31 +175,41 @@ in
     with pkgs;
     let
       extras = [
+
+        beeper
+
+        bitwarden-desktop
+        
         whitesur-cursors
         whitesur-icon-theme
         whitesur-gtk-theme
-        kdePackages.xdg-desktop-portal-kde
+        # kdePackages.xdg-desktop-portal-kde
         
         yt-dlp
         # play-with-mpv
         (mpv.override { scripts = [mpvScripts.youtube-upnext]; })
-        nixd
-        zed-editor # cache broken
+        # zed-editor # cache broken
         zoxide # cd relacement
         # warp-terminal # kind of slow
         swi-prolog
         # sd # sed replacement, is not maintaind any more
-        mu
+        # mu # mail thing
         # lilypond-unstable
         imagemagick
         zstd
         microsoft-edge
-        stack
+        stack #haskell whatever
+        tinymist # typst lsp
+        typst
+
+        obsidian
+        zotero
+        tor-browser
 
         # gnome.pomodoro
         # I forgot what kimpanel is
         # gnomeExtensions.kimpanel
-        gnomeExtensions.paperwm
+        # gnomeExtensions.paperwm
         gnomeExtensions.dock-from-dash
         gnomeExtensions.blur-my-shell
         gnomeExtensions.just-perfection
@@ -200,32 +217,34 @@ in
         gnomeExtensions.top-bar-organizer
         gnome-pomodoro
         # pop_shell # bad
-        emacs
+        # emacs
         # veracrypt # I don't know what this is
         # veracrypt is very slow to build
         # teams
         clang-tools
         # (bilibili) # error with electron too old
-        luarocks
+        # luarocks
         yazi # file manager
-        wezterm # terminal
+        # wezterm # terminal
 
+        harper # spellcheck
         nixfmt-rfc-style # formatter
         devenv # dev enviormnets
-        (kdePackages.qtstyleplugin-kvantum)
-        libsForQt5.qt5.qtgraphicaleffects
+        # beeper 
+        # (kdePackages.qtstyleplugin-kvantum)
+        # libsForQt5.qt5.qtgraphicaleffects
       ];
     in
     (builtins.concatLists [
       software.essential
-      software.haskellPkgs
+      # software.haskellPkgs
       # software.purescript
-      software.rust
-      software.latex
-      software.cTools
+      # software.rust
+      # software.latex
+      # software.cTools
       software.applications
       software.cmdExtras
-      software.python
+      # software.python
       # software.hyprland
       extras
     ]);
@@ -257,11 +276,11 @@ in
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
   ];
-  programs.hyprland.enable = true;
+  programs.hyprland.enable = false;
 
   # programs.waybar.enable = true;
   programs.fish.enable = true;
-  programs.steam.enable = true;
+  # programs.steam.enable = true;
   programs.neovim.enable = true;
   programs.neovim.defaultEditor = true;
 

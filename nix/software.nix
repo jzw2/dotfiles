@@ -1,5 +1,7 @@
 pkgs: with pkgs; {
   essential = [
+
+    nixd
     neovim
     pandoc
     ripgrep
@@ -11,7 +13,7 @@ pkgs: with pkgs; {
     fd # find replacement
     sqlite # need it for org roam
     alacritty
-    selectdefaultapplication
+    selectdefaultapplication # so yo udon't mess with the xdg wahtever thing
     # tmux
   ];
 
@@ -24,7 +26,7 @@ pkgs: with pkgs; {
     sptlrx
     bat
     zellij
-    python311Packages.habitipy
+    # python311Packages.habitipy
     translate-shell
     gitui # rust thing, seems beetter than lazygit
     lagrange
@@ -35,7 +37,7 @@ pkgs: with pkgs; {
     gcc
     glslang
     gnumake
-    rtags
+    # rtags
 
   ];
 
@@ -52,19 +54,19 @@ pkgs: with pkgs; {
         requests
         regex
         pandas
-        (buildPythonPackage rec {
-          pname = "perlin_noise";
-          version = "1.12";
-          src = fetchPypi {
-            inherit pname version;
-            sha256 = "sha256-AexC2fK8M4rlLtuwabN1+4P+xReE4XR5NmztH3BjlXw=";
-          };
-          doCheck = false;
-          propagatedBuildInputs = [
-            # Specify dependencies
-            # pkgs.python3Packages.numpy
-          ];
-        })
+        # (buildPythonPackage rec {
+        #   pname = "perlin_noise";
+        #   version = "1.12";
+        #   src = fetchPypi {
+        #     inherit pname version;
+        #     sha256 = "sha256-AexC2fK8M4rlLtuwabN1+4P+xReE4XR5NmztH3BjlXw=";
+        #   };
+        #   doCheck = false;
+        #   propagatedBuildInputs = [
+        #     # Specify dependencies
+        #     # pkgs.python3Packages.numpy
+        #   ];
+        # })
       ]
     ))
   ];
