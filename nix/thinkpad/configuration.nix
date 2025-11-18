@@ -40,6 +40,7 @@
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
+  boot.loader.grub.theme = "/home/john/bsol/bsol";
   # boot.loader.grub.efiInstallAsRemovable = true;
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
   # Define on which hard drive you want to install Grub.
@@ -280,7 +281,7 @@
 
   # programs.waybar.enable = true;
   programs.fish.enable = true;
-  # programs.steam.enable = true;
+  programs.steam.enable = true;
   programs.neovim.enable = true;
   programs.neovim.defaultEditor = true;
 

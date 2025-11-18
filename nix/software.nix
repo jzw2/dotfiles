@@ -156,7 +156,7 @@ pkgs: with pkgs; {
     bluetuith
     wl-clipboard
 
-    eww
+    # eww
     libnotify
 
   ];

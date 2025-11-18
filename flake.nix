@@ -11,14 +11,14 @@
     # nixpkgs.url = "nixpkgs/nixos-24.11"; # last version that was working
 
     # nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2405.0";
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    # nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
   };
 
   outputs =
     {
       self,
       nixpkgs,
-      nixos-cosmic,
+      # nixos-cosmic,
     # determinate,
     }:
     {
@@ -35,6 +35,7 @@
             {
               nix.settings = {
                 substituters = [
+                  "https://cache.nixos.org/"
                   "https://cosmic.cachix.org/"
 
                   "https://cache.flox.dev"
@@ -49,7 +50,7 @@
 
               };
             }
-            nixos-cosmic.nixosModules.default
+            # nixos-cosmic.nixosModules.default
             # determinate.nixosModules.default
             ./nix/thinkpad/configuration.nix
           ];
