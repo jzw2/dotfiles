@@ -77,15 +77,15 @@
   i18n.inputMethod = {
     # enabled = "ibus";
     # ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin rime ];
-    enable = false;
+    enable = true;
     fcitx5.waylandFrontend = true;
     type = "fcitx5";
     fcitx5.addons = with pkgs; [
-      # fcitx5-gtk
+      fcitx5-gtk
       # fcitx5-hangul
-      fcitx5-chinese-addons
+      qt6Packages.fcitx5-chinese-addons
       # fcitx5-mozc
-      # fcitx5-table-extra
+       fcitx5-table-extra
     ];
     # fcitx5.plasma6Support = true;
   };
