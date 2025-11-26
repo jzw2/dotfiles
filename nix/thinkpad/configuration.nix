@@ -172,6 +172,7 @@
     with pkgs;
     let
       extras = [
+        # captive-browser # this makes it so that you can get the wifi redirect easier
 
         beeper
 
@@ -269,10 +270,13 @@
   # zed stopped working after I enabled this
   # programs.nix-ld.enable = true;
 
-  programs.nix-ld.libraries = with pkgs; [
+  # I have no idea what this is
+  # programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
-  ];
+  #];
+  programs.captive-browser.enable = true;
+  programs.captive-browser.interface = "wlp4s0";
   programs.hyprland.enable = false;
 
   # programs.waybar.enable = true;
