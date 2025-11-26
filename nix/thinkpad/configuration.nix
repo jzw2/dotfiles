@@ -295,7 +295,7 @@
   services.kubo.enable = true;
   services.pipewire.enable = true; # for hyprland
 
-  virtualisation.docker.enable = true;
+  virtualisation.docker.enable = false; # breaks everything on ice
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
