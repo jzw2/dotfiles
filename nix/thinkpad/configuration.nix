@@ -124,13 +124,13 @@
     dataDir = "/home/john/";
   };
   # Enable the GNOME 3 Desktop Environment.
-  services.xserver.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.enable = true;
+  services.desktopManager.gnome.enable = true;
   # services.desktopManager.plasma6.enable = false;
   # services.desktopManager.cosmic.enable = true;
 
   # services.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
+  services.displayManager.gdm.enable = true;
   # services.displayManager.cosmic-greeter.enable = true;
   # services.xserver.displayManager.gdm.debug = true;
   # Workaround for NixOS/nixpkgs#92265
