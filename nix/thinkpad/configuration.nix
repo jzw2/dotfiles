@@ -133,7 +133,7 @@
   services.displayManager.gdm.enable = false;
   # services.displayManager.cosmic-greeter.enable = true;
   # services.xserver.displayManager.gdm.debug = true;
-  services.xserver.displayManager.lightdm.debug = true;
+  services.xserver.displayManager.lightdm.enable = true;
   # Workaround for NixOS/nixpkgs#92265
   # services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
 
