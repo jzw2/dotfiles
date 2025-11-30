@@ -125,9 +125,10 @@
   };
   # Enable the GNOME 3 Desktop Environment.
   # services.xserver.enable = true;
-  services.desktopManager.gnome.enable = true;
+  services.desktopManager.gnome.enable = pkgs.lib.mkDefault true;
   # services.desktopManager.plasma6.enable = false;
   # services.desktopManager.cosmic.enable = true;
+  services.desktopManager.pantheon.enable = true;
 
   # services.displayManager.gdm.enable = true;
   services.displayManager.gdm.enable = true;
