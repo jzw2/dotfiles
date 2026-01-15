@@ -146,6 +146,7 @@
 
   # Enable sound.
   # hardware.pulseaudio.enable = true; # give me alsa?  # false is required with piepwire
+  hardware.graphics.enable32Bit = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -174,6 +175,7 @@
     let
       extras = [
         # captive-browser # this makes it so that you can get the wifi redirect easier
+        lutris # gaming
 
         beeper
 
