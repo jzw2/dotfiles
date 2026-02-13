@@ -165,6 +165,8 @@
 
   users.defaultUserShell = pkgs.fish;
 
+  users.extraGroups.docker.members = [ "john" ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages =
@@ -231,6 +233,9 @@
         harper # spellcheck
         nixfmt-rfc-style # formatter
         devenv # dev enviormnets
+
+	vscode
+	(coq.withPackages (ps: with ps; [ coqPackages.stdlib ]))
         # beeper 
         # (kdePackages.qtstyleplugin-kvantum)
         # libsForQt5.qt5.qtgraphicaleffects
@@ -286,6 +291,7 @@
   programs.fish.enable = true;
   programs.steam.enable = true;
   programs.neovim.enable = true;
+  programs.neovim.withPython3 = true;
   programs.neovim.defaultEditor = true;
 
   # List services that you want to enable:
@@ -298,7 +304,7 @@
   services.kubo.enable = true;
   services.pipewire.enable = true; # for hyprland
 
-  virtualisation.docker.enable = false; # breaks everything on ice
+  virtualisation.docker.enable = true; # breaks everything on ice
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
