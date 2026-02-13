@@ -207,7 +207,7 @@
 
         obsidian
         zotero
-        tor-browser
+        # tor-browser # I don't tihink I need this
 
         # gnome.pomodoro
         # I forgot what kimpanel is
