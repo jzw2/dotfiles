@@ -1,6 +1,7 @@
 pkgs: with pkgs; {
   essential = [
 
+    nix-tree # see what is taking up space in nix
     nixd
     neovim
     pandoc
@@ -127,7 +128,7 @@ pkgs: with pkgs; {
     # discord # discord screenshare doesn't work
     vesktop
     # minecraft # broken
-    prismlauncher # minecraft
+    # prismlauncher # minecraft
     zoom-us
     anki
     thunderbird
