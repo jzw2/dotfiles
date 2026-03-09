@@ -147,6 +147,7 @@
   # Enable sound.
   # hardware.pulseaudio.enable = true; # give me alsa?  # false is required with piepwire
   hardware.graphics.enable32Bit = true;
+  hardware.graphics.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
