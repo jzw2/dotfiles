@@ -3,7 +3,7 @@ pkgs: with pkgs; {
 
     nix-tree # see what is taking up space in nix
     nixd
-    neovim
+    # neovim
     pandoc
     ripgrep
     bat

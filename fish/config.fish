@@ -31,3 +31,4 @@ function today
     ln -s "$baseDir/$today.org" "$baseDir/today"
 end
 zoxide init fish | source
+flox activate -d ~ -m run | source

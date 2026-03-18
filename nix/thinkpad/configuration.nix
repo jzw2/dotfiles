@@ -117,6 +117,8 @@
 
     
   };
+  services.fwupd.enable = true;
+
   services.syncthing = {
     enable = true;
     group = "users";
@@ -178,11 +180,12 @@
     let
       extras = [
         # captive-browser # this makes it so that you can get the wifi redirect easier
-        lutris # gaming
-
+        # lutris # gaming
+	(python3.withPackages ( ps: [ps.pynvim] ))
+(agda.withPackages [ agdaPackages.standard-library ])
         beeper
 
-        bitwarden-desktop
+        # bitwarden-desktop # I tink I cna just use the browser plugin
         
         whitesur-cursors
         whitesur-icon-theme
@@ -233,7 +236,17 @@
 
         harper # spellcheck
         nixfmt-rfc-style # formatter
-        devenv # dev enviormnets
+	devenv # dev enviormnets
+	# (neovim.override { withPython3 = true;} )
+# 	(wrapNeovimUnstable neovim-unwrapped {
+# 	 autoconfigure = true;
+# 	 autowrapRuntimeDeps = true;
+# # plugins accepts a list of either plugins or { plugin = ...; config = ..vimscript.. };
+# 	 withPython3 = true;
+# 	 withNodeJs = false;
+# 	 withRuby = true;
+# 	 })
+
 
 	vscode
 	(coq.withPackages (ps: with ps; [ coqPackages.stdlib ]))
@@ -291,9 +304,51 @@
   # programs.waybar.enable = true;
   programs.fish.enable = true;
   programs.steam.enable = true;
-  programs.neovim.enable = true;
-  programs.neovim.withPython3 = true;
-  programs.neovim.defaultEditor = true;
+
+  programs.neovim = {
+	  enable = true;
+	  withPython3 = true;
+	  defaultEditor = true;
+	  configure = {
+		  customLuaRC = ''
+			  vim.g.mapleader = ' '
+			  vim.g.maplocalleader = ' '
+
+
+			  vim.g.python3_host_prog = "/run/current-system/sw/bin/python3"
+
+			  -- Set to true if you have a Nerd Font installed and selected in the terminal
+			  vim.g.have_nerd_font = false
+
+			  -- [[ Setting options ]]
+			  -- See `:help vim.opt`
+			  -- NOTE: You can change these options as you wish!
+			  --  For more options, you can see `:help option-list`
+
+			  vim.cmd.colorscheme "industry"
+
+			  -- Make line numbers default
+			  vim.opt.number = true
+			  -- You can also add relative line numbers, to help with jumping.
+			  --  Experiment for yourself to see if you like it!
+			  -- vim.opt.relativenumber = true
+
+			  -- Enable mouse mode, can be useful for resizing splits for example!
+			  vim.opt.mouse = 'a'
+
+			  -- Don't show the mode, since it's already in the status line
+			  vim.opt.showmode = false
+			  '';
+
+		  packages.myVimPackage = with pkgs.vimPlugins; {
+# loaded on launch
+			  start = [ Coqtail ];
+# manually loadable by calling `:packadd $plugin-name`
+			  opt = [ ];
+		  };
+
+	  };
+  };
 
   # List services that you want to enable:
 
