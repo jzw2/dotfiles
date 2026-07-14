@@ -17,17 +17,21 @@
       extra-substituters = https://devenv.cachix.org
       extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
     '';
+
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
-    settings.trusted-users = [ "root" "john" ];
+    settings.trusted-users = [
+      "root"
+      "john"
+    ];
 
     settings.trusted-substituters = [ "https://cache.flox.dev" ];
     settings.trusted-public-keys = [
       "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
-       ];
+    ];
 
   };
 
@@ -36,7 +40,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # boot.loader.limine.enable = true;
-    
+
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
@@ -44,8 +48,8 @@
   # boot.loader.grub.efiInstallAsRemovable = true;
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
   # Define on which hard drive you want to install Grub.
-   boot.loader.grub.device = "nodev"; # or "nodev" for efi only
-   boot.loader.grub.useOSProber = false;
+  boot.loader.grub.device = "nodev"; # or "nodev" for efi only
+  boot.loader.grub.useOSProber = false;
 
   # boot.loader.systemd-boot.enable = true;
 
@@ -81,7 +85,7 @@
       # fcitx5-hangul
       qt6Packages.fcitx5-chinese-addons
       # fcitx5-mozc
-       fcitx5-table-extra
+      fcitx5-table-extra
     ];
     # fcitx5.plasma6Support = true;
   };
@@ -90,17 +94,17 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       # siji # for bars or whatever
-       jetbrains-mono
-       noto-fonts
-       noto-fonts-cjk-sans
-       # noto-fonts-emoji
-       fira-code
-       font-awesome
-       newcomputermodern
+      jetbrains-mono
+      noto-fonts
+      noto-fonts-cjk-sans
+      # noto-fonts-emoji
+      fira-code
+      font-awesome
+      newcomputermodern
 
       # babelstone-han # yay I like archaick characters
 
-       nerd-fonts.fira-code
+      nerd-fonts.fira-code
     ];
 
     fontconfig = {
@@ -114,8 +118,6 @@
       };
     };
 
-
-    
   };
   services.fwupd.enable = true;
 
@@ -128,50 +130,7 @@
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
   services.desktopManager.gnome.enable = true;
-  # services.desktopManager.plasma6.enable = false;
-  # services.desktopManager.cosmic.enable = true;
-  services.desktopManager.pantheon.enable = false;
 
-  services.displayManager.gdm.enable = true;
-  # services.displayManager.cosmic-greeter.enable = true;
-  # services.xserver.displayManager.gdm.debug = true;
-  services.xserver.displayManager.lightdm.enable = false;
-  # Workaround for NixOS/nixpkgs#92265
-  # services.xserver.desktopManager.gnome.sessionPath = [ pop_shell ];
-
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # hardware.pulseaudio.enable = true; # give me alsa?  # false is required with piepwire
-  hardware.graphics.enable32Bit = true;
-  hardware.graphics.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-  services.fprintd.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.john = {
-    isNormalUser = true;
-    initialPassword = "";
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      config.services.kubo.group
-    ]; # Enable ‘sudo’ for the user.
-  };
-
-  users.defaultUserShell = pkgs.fish;
-
-  users.extraGroups.docker.members = [ "john" ];
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages =
     let
       software = ((import ../software.nix) pkgs);
@@ -179,43 +138,39 @@
     with pkgs;
     let
       extras = [
-        # captive-browser # this makes it so that you can get the wifi redirect easier
-        # lutris # gaming
-	(python3.withPackages ( ps: [ps.pynvim] ))
-(agda.withPackages [ agdaPackages.standard-library ])
+        (python3.withPackages (ps: [ ps.pynvim ]))
+        (agda.withPackages [
+          agdaPackages.standard-library
+        ])
         beeper
 
         # bitwarden-desktop # I tink I cna just use the browser plugin
-        
+
         whitesur-cursors
         whitesur-icon-theme
         whitesur-gtk-theme
         # kdePackages.xdg-desktop-portal-kde
-        
+
         yt-dlp
         # play-with-mpv
-        (mpv.override { scripts = [mpvScripts.youtube-upnext]; })
+        (mpv.override { scripts = [ mpvScripts.youtube-upnext ]; })
         # zed-editor # cache broken
         zoxide # cd relacement
         # warp-terminal # kind of slow
         swi-prolog
-        # sd # sed replacement, is not maintaind any more
-        # mu # mail thing
+        # sd # sed replacement, is not maintaind any more mu # mail thing
         # lilypond-unstable
         imagemagick
         zstd
         microsoft-edge
-        stack #haskell whatever
-        tinymist # typst lsp
-        typst
+        stack # haskell whatever
+        tinymist # typst lsp typst
 
         obsidian
         zotero
         # tor-browser # I don't tihink I need this
 
-        # gnome.pomodoro
-        # I forgot what kimpanel is
-        # gnomeExtensions.kimpanel
+        # gnome.pomodoro I forgot what kimpanel is gnomeExtensions.kimpanel
         # gnomeExtensions.paperwm
         gnomeExtensions.dock-from-dash
         gnomeExtensions.blur-my-shell
@@ -223,79 +178,57 @@
         gnomeExtensions.logo-menu
         gnomeExtensions.top-bar-organizer
         gnome-pomodoro
-        # pop_shell # bad
-        # emacs
-        # veracrypt # I don't know what this is
-        # veracrypt is very slow to build
-        # teams
+        # pop_shell # bad emacs veracrypt # I don't know what this is veracrypt
+        # is very slow to build teams
         clang-tools
-        # (bilibili) # error with electron too old
-        # luarocks
+        # (bilibili) # error with electron too old luarocks
         yazi # file manager
         # wezterm # terminal
 
-        harper # spellcheck
-        nixfmt-rfc-style # formatter
-	devenv # dev enviormnets
-	# (neovim.override { withPython3 = true;} )
-# 	(wrapNeovimUnstable neovim-unwrapped {
-# 	 autoconfigure = true;
-# 	 autowrapRuntimeDeps = true;
-# # plugins accepts a list of either plugins or { plugin = ...; config = ..vimscript.. };
-# 	 withPython3 = true;
-# 	 withNodeJs = false;
-# 	 withRuby = true;
-# 	 })
+        harper # spellcheck nixfmt-rfc-style # formatter devenv # dev enviormnets
+        # (neovim.override { withPython3 = true;} ) (wrapNeovimUnstable
+        # neovim-unwrapped { autoconfigure = true; autowrapRuntimeDeps = true;
+        # # plugins accepts a list of either plugins or { plugin = ...; config
+        # = ..vimscript.. }; withPython3 = true; withNodeJs = false; withRuby =
+        # true; })
+
+        nixd # nixd
 
 
-	vscode
-	(coq.withPackages (ps: with ps; [ coqPackages.stdlib ]))
-        # beeper 
-        # (kdePackages.qtstyleplugin-kvantum)
+        vscode
+        (coq.withPackages (ps: with ps; [ coqPackages.stdlib ]))
+        # beeper (kdePackages.qtstyleplugin-kvantum)
         # libsForQt5.qt5.qtgraphicaleffects
       ];
     in
     (builtins.concatLists [
       software.essential
-      # software.haskellPkgs
-      # software.purescript
-      # software.rust
-      # software.latex
+      # software.haskellPkgs software.purescript software.rust software.latex
       # software.cTools
       software.applications
       software.cmdExtras
-      # software.python
-      # software.hyprland
+      # software.python software.hyprland
       extras
     ]);
 
   xdg.mime.defaultApplications = {
 
-    # "application/pdf" = "zathura.desktop";
-    #                "image/png" = [
-    #                  "sxiv.desktop"
-    #                  "gimp.desktop"
-    #            ];
+    # "application/pdf" = "zathura.desktop"; "image/png" = [ "sxiv.desktop"
+    # "gimp.desktop" ];
 
-  # Some programs need SUID wrappers, can be configured further or are
+    # Some programs need SUID wrappers, can be configured further or are
   };
   xdg.portal.enable = true;
 
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  # started in user sessions. programs.mtr.enable = true; programs.gnupg.agent
+  # = { enable = true; enableSSHSupport = true; };
   #
 
-  # zed stopped working after I enabled this
-  # programs.nix-ld.enable = true;
+  # zed stopped working after I enabled this programs.nix-ld.enable = true;
 
-  # I have no idea what this is
-  # programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged programs
-    # here, NOT in environment.systemPackages
+  # I have no idea what this is programs.nix-ld.libraries = with pkgs; [ Add
+  # any missing dynamic libraries for unpackaged programs here, NOT in
+  # environment.systemPackages
   #];
   programs.captive-browser.enable = true;
   programs.captive-browser.interface = "wlp4s0";
@@ -306,48 +239,51 @@
   programs.steam.enable = true;
 
   programs.neovim = {
-	  enable = true;
-	  withPython3 = true;
-	  defaultEditor = true;
-	  configure = {
-		  customLuaRC = ''
-			  vim.g.mapleader = ' '
-			  vim.g.maplocalleader = ' '
+    enable = true;
+    withPython3 = true;
+    defaultEditor = true;
+    configure = {
+      customLuaRC = ''
+         vim.g.mapleader = ' ' vim.g.maplocalleader = '
+          '
 
 
-			  vim.g.python3_host_prog = "/run/current-system/sw/bin/python3"
+        			  vim.g.python3_host_prog =
+        			  "/run/current-system/sw/bin/python3"
 
-			  -- Set to true if you have a Nerd Font installed and selected in the terminal
-			  vim.g.have_nerd_font = false
+        			  -- Set to true if you have a Nerd Font installed and
+        			  selected in the terminal vim.g.have_nerd_font = false
 
-			  -- [[ Setting options ]]
-			  -- See `:help vim.opt`
-			  -- NOTE: You can change these options as you wish!
-			  --  For more options, you can see `:help option-list`
+        			  -- [[ Setting options ]] -- See `:help vim.opt` --
+        			  NOTE: You can change these options as you wish! --
+        			  For more options, you can see `:help option-list`
 
-			  vim.cmd.colorscheme "industry"
+        			  vim.cmd.colorscheme "industry"
 
-			  -- Make line numbers default
-			  vim.opt.number = true
-			  -- You can also add relative line numbers, to help with jumping.
-			  --  Experiment for yourself to see if you like it!
-			  -- vim.opt.relativenumber = true
+        			  -- Make line numbers default vim.opt.number = true --
+        			  You can also add relative line numbers, to help with
+        			  jumping. --  Experiment for yourself to see if you
+        			  like it! -- vim.opt.relativenumber = true
 
-			  -- Enable mouse mode, can be useful for resizing splits for example!
-			  vim.opt.mouse = 'a'
+        			  -- Enable mouse mode, can be useful for resizing
+        			  splits for example! vim.opt.mouse = 'a'
 
-			  -- Don't show the mode, since it's already in the status line
-			  vim.opt.showmode = false
-			  '';
+        			  -- Don't show the mode, since it's already in the
+        			  status line vim.opt.showmode = false
 
-		  packages.myVimPackage = with pkgs.vimPlugins; {
-# loaded on launch
-			  start = [ Coqtail ];
-# manually loadable by calling `:packadd $plugin-name`
-			  opt = [ ];
-		  };
+        			  vim.lsp.enable('nixd') '';
 
-	  };
+      packages.myVimPackage = with pkgs.vimPlugins; {
+        # loaded on launch
+        start = [
+          Coqtail
+          nvim-lspconfig
+        ];
+        # manually loadable by calling `:packadd $plugin-name`
+        opt = [ ];
+      };
+
+    };
   };
 
   # List services that you want to enable:
@@ -360,20 +296,30 @@
   services.kubo.enable = true;
   services.pipewire.enable = true; # for hyprland
 
+  services.fprintd.enable = true;
+
+
+  users.users.john = {
+    isNormalUser = true;
+    initialPassword = "";
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
+  };
+
   virtualisation.docker.enable = true; # breaks everything on ice
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # Open ports in the firewall. networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ]; Or disable the firewall
+  # altogether. networking.firewall.enable = false;
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  # This value determines the NixOS release from which the default settings for
+  # stateful data, like file locations and database versions on your system
+  # were taken. It‘s perfectly fine and recommended to leave this value at the
+  # release version of the first install of this system. Before changing this
+  # value read the documentation for this option (e.g. man configuration.nix or
+  # on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.09"; # Did you read the comment?
 
 }
