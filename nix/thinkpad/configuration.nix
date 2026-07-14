@@ -130,6 +130,7 @@
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
   services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
 
   environment.systemPackages =
     let
@@ -194,7 +195,6 @@
 
         nixd # nixd
 
-
         vscode
         (coq.withPackages (ps: with ps; [ coqPackages.stdlib ]))
         # beeper (kdePackages.qtstyleplugin-kvantum)
@@ -244,34 +244,26 @@
     defaultEditor = true;
     configure = {
       customLuaRC = ''
-         vim.g.mapleader = ' ' vim.g.maplocalleader = '
-          '
+                 vim.g.mapleader = ' ' 
+        	 vim.g.maplocalleader = ' '
+		  vim.g.python3_host_prog = "/run/current-system/sw/bin/python3"
+
+		  vim.g.have_nerd_font = false
 
 
-        			  vim.g.python3_host_prog =
-        			  "/run/current-system/sw/bin/python3"
+        	  vim.cmd.colorscheme "industry"
 
-        			  -- Set to true if you have a Nerd Font installed and
-        			  selected in the terminal vim.g.have_nerd_font = false
+        	  vim.opt.number = true 
 
-        			  -- [[ Setting options ]] -- See `:help vim.opt` --
-        			  NOTE: You can change these options as you wish! --
-        			  For more options, you can see `:help option-list`
+		  vim.opt.relativenumber = true
 
-        			  vim.cmd.colorscheme "industry"
+		  vim.opt.mouse = 'a'
 
-        			  -- Make line numbers default vim.opt.number = true --
-        			  You can also add relative line numbers, to help with
-        			  jumping. --  Experiment for yourself to see if you
-        			  like it! -- vim.opt.relativenumber = true
+		  vim.opt.showmode = false
 
-        			  -- Enable mouse mode, can be useful for resizing
-        			  splits for example! vim.opt.mouse = 'a'
+        	  vim.lsp.enable('nixd') 
 
-        			  -- Don't show the mode, since it's already in the
-        			  status line vim.opt.showmode = false
-
-        			  vim.lsp.enable('nixd') '';
+        			  '';
 
       packages.myVimPackage = with pkgs.vimPlugins; {
         # loaded on launch
@@ -298,14 +290,17 @@
 
   services.fprintd.enable = true;
 
+  users = {
+    users.john = {
+      isNormalUser = true;
+      initialPassword = "";
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+      ];
+    };
 
-  users.users.john = {
-    isNormalUser = true;
-    initialPassword = "";
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-    ];
+    defaultUserShell = pkgs.fish;
   };
 
   virtualisation.docker.enable = true; # breaks everything on ice

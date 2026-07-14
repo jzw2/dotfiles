@@ -19,7 +19,7 @@
       self,
       nixpkgs,
       # nixos-cosmic,
-    # determinate,
+      # determinate,
     }:
     {
       nixosConfigurations = {
