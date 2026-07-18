@@ -19,6 +19,7 @@ vim.opt.shiftwidth = 2
 vim.opt.softtabstop = -1
 
 
+vim.opt.completeopt = { "menu", "menuone", "popup", "noselect" }
 
 
 
@@ -128,3 +129,10 @@ vim.lsp.config('lua_ls', {
 vim.lsp.enable('tinymist')
 vim.lsp.enable('nixd')
 vim.lsp.enable('lua_ls')
+
+
+vim.filetype.add({
+  extension = {
+    typst = 'typst'
+  }
+})
