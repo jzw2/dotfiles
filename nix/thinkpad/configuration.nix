@@ -166,6 +166,7 @@
         microsoft-edge
         stack # haskell whatever
         tinymist # typst lsp typst
+        typst
 
         obsidian
         zotero
@@ -316,6 +317,7 @@
           end,
         })
 
+                          vim.lsp.enable('tinymist')
                     	  vim.lsp.enable('nixd') 
 
 
