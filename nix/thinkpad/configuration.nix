@@ -82,7 +82,7 @@
     type = "fcitx5";
     fcitx5.addons = with pkgs; [
       fcitx5-gtk
-      # fcitx5-hangul
+      fcitx5-hangul
       qt6Packages.fcitx5-chinese-addons
       # fcitx5-mozc
       fcitx5-table-extra
@@ -253,6 +253,7 @@
         start = [
           Coqtail
           nvim-lspconfig
+          nvim-autopairs
         ];
         # manually loadable by calling `:packadd $plugin-name`
         opt = [ ];
