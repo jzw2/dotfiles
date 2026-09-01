@@ -217,7 +217,8 @@
         nixfmt
 
         vscode
-        (coq.withPackages (ps: with ps; [ coqPackages.stdlib ]))
+        # todo fix the coq thing
+        # (coq.withPackages (ps: with ps; [ coqPackages.stdlib ]))
         # beeper (kdePackages.qtstyleplugin-kvantum)
         # libsForQt5.qt5.qtgraphicaleffects
       ];
