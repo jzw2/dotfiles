@@ -132,6 +132,24 @@
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.enable = true;
 
+  # chatgpt wrote this part I don't know how tru it is
+  services.pipewire.wireplumber.extraConfig."51-hdmi-priority" = {
+    "monitor.alsa.rules" = [
+      {
+        matches = [
+          {
+            "node.name" = "alsa_output.pci-0000_00_1f.3.hdmi-stereo";
+          }
+        ];
+        actions = {
+          update-props = {
+            "priority.driver" = 2000;
+            "priority.session" = 2000;
+          };
+        };
+      }
+    ];
+  };
   environment.systemPackages =
     let
       software = ((import ../software.nix) pkgs);
