@@ -5,12 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
-
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   nix = {
     # package = pkgs.nixFlakes;
@@ -19,7 +17,7 @@
       extra-substituters = https://devenv.cachix.org
       extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
     '';
-}
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -131,32 +129,110 @@
   users.users."john" = {
     isNormalUser = true;
     description = "john";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
+  programs = {
+    firefox.enable = true;
+
+    neovim = {
+      enable = true;
+      withPython3 = true;
+      defaultEditor = true;
+      configure = {
+        customLuaRC = builtins.readFile ../../neovim/init.lua;
+
+        packages.myVimPackage = with pkgs.vimPlugins; {
+          # loaded on launch
+          start = [
+            Coqtail
+            nvim-lspconfig
+            nvim-autopairs
+          ];
+          # manually loadable by calling `:packadd $plugin-name`
+          opt = [ ];
+        };
+
+      };
+    };
+    steam = {
+      enable = true;
+    };
+
+    fish.enable = true;
+
+  };
+
   # Install firefox.
-  programs.firefox.enable = true;
-
-
-  programs.neovim = {
-    enable = true;
-  }
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile.
-  # You can use https://search.nixos.org/ to find more packages (and options).
-  environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-     git
-	steam
-  ];
+  environment.systemPackages =
+    let
+      software = ((import ../software.nix) pkgs);
+    in
+    with pkgs;
+    let
+      extras = [
+        (python3.withPackages (ps: [ ps.pynvim ]))
+        (agda.withPackages [
+          agdaPackages.standard-library
+        ])
+        beeper
 
+        whitesur-cursors
+        whitesur-icon-theme
+        whitesur-gtk-theme
+
+        (mpv.override { scripts = [ mpvScripts.youtube-upnext ]; })
+        zoxide # cd relacement
+        swi-prolog
+        # sd # sed replacement, is not maintaind any more mu # mail thing
+        # lilypond-unstable
+        imagemagick
+        zstd # don't know what this is
+        microsoft-edge
+        stack # haskell whatever
+        tinymist # typst lsp typst
+        typst
+
+        obsidian
+        zotero
+        # tor-browser # I don't tihink I need this
+
+        gnomeExtensions.dock-from-dash
+        gnomeExtensions.blur-my-shell
+        gnomeExtensions.just-perfection
+        gnomeExtensions.logo-menu
+        gnomeExtensions.top-bar-organizer
+        gnome-pomodoro
+        clang-tools
+        yazi # file manager
+
+        harper # spellcheck nixfmt-rfc-style # formatter devenv # dev enviormnets
+
+        nixd # nixd
+        lua-language-server
+        nixfmt
+
+        vscode
+      ];
+    in
+    (builtins.concatLists [
+      software.essential
+      # software.haskellPkgs software.purescript software.rust software.latex
+      # software.cTools
+      software.applications
+      software.cmdExtras
+      # software.python software.hyprland
+      extras
+    ]);
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

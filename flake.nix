@@ -29,6 +29,32 @@
             ./nix/idea/idea.nix
           ];
         };
+        x1 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            {
+              nix.settings = {
+                substituters = [
+                  "https://cache.nixos.org/"
+                  "https://cosmic.cachix.org/"
+
+                  "https://cache.flox.dev"
+                  "https://devenv.cachix.org"
+                ];
+
+                trusted-public-keys = [
+                  "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
+                  "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+                  "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
+                ];
+
+              };
+            }
+            # nixos-cosmic.nixosModules.default
+            # determinate.nixosModules.default
+            ./nix/x1/configuration.nix
+          ];
+        };
         thinkpad = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
