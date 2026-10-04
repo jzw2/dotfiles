@@ -136,6 +136,7 @@
     packages = with pkgs; [
       #  thunderbird
     ];
+    defaultUserShell = pkgs.fish;
   };
 
   programs = {
