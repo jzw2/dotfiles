@@ -129,6 +129,7 @@ vim.lsp.config('lua_ls', {
 vim.lsp.enable('tinymist')
 vim.lsp.enable('nixd')
 vim.lsp.enable('lua_ls')
+vim.lsp.enable('texlab')
 
 
 vim.filetype.add({

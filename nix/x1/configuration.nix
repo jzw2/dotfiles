@@ -195,6 +195,7 @@
         (agda.withPackages [
           agdaPackages.standard-library
         ])
+        affine # note taking
         github-copilot-cli
         displaylink # needed to dispaly monitor over usb
         # beeper
