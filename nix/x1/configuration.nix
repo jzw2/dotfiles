@@ -61,6 +61,10 @@
     variant = "";
   };
 
+  services.xserver.videoDrivers = [ "displaylink" ];
+
+  systemd.services.dlm.wantedBy = [ "multi-user.target" ];
+
   i18n.inputMethod = {
     # enabled = "ibus";
     # ibus.engines = with pkgs.ibus-engines; [ hangul libpinyin rime ];
@@ -136,11 +140,16 @@
     packages = with pkgs; [
       #  thunderbird
     ];
-    defaultUserShell = pkgs.fish;
   };
+  users.defaultUserShell = pkgs.fish;
 
   programs = {
     firefox.enable = true;
+
+    evolution = {
+      enable = true;
+      plugins = [ pkgs.evolution-ews ];
+    };
 
     neovim = {
       enable = true;
@@ -155,6 +164,7 @@
             Coqtail
             nvim-lspconfig
             nvim-autopairs
+            vimtex
           ];
           # manually loadable by calling `:packadd $plugin-name`
           opt = [ ];
@@ -185,7 +195,9 @@
         (agda.withPackages [
           agdaPackages.standard-library
         ])
-        beeper
+        github-copilot-cli
+        displaylink # needed to dispaly monitor over usb
+        # beeper
 
         whitesur-cursors
         whitesur-icon-theme
@@ -227,11 +239,9 @@
     in
     (builtins.concatLists [
       software.essential
-      # software.haskellPkgs software.purescript software.rust software.latex
-      # software.cTools
-      software.applications
+      software.latex
+      software.work
       software.cmdExtras
-      # software.python software.hyprland
       extras
     ]);
   # Some programs need SUID wrappers, can be configured further or are

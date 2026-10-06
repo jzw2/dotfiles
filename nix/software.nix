@@ -122,6 +122,11 @@ pkgs: with pkgs; {
     texlab # lsp
   ];
 
+  work = [
+    zoom-us
+    texliveMedium
+  ];
+
   applications = [
     # whatsapp-for-linux  # this sucks
     spotify
