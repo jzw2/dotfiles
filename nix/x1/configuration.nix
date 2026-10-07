@@ -191,6 +191,7 @@
     with pkgs;
     let
       extras = [
+        pyright # python lsp
         (python3.withPackages (ps: [ ps.pynvim ]))
         (agda.withPackages [
           agdaPackages.standard-library

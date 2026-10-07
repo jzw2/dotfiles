@@ -125,6 +125,7 @@ pkgs: with pkgs; {
   work = [
     zoom-us
     texliveMedium
+    texlab
   ];
 
   applications = [
