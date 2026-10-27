@@ -131,6 +131,7 @@ vim.lsp.enable('nixd')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('texlab')
 vim.lsp.enable('pyright')
+vim.lsp.enable('jdtls')
 
 
 vim.filetype.add({
