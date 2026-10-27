@@ -144,7 +144,7 @@
   users.defaultUserShell = pkgs.fish;
 
   programs = {
-    firefox.enable = true;
+    # firefox.enable = true;
 
     evolution = {
       enable = true;
@@ -218,7 +218,7 @@
         typst
 
         obsidian
-        zotero
+        # zotero # temporaritly disabled because a firefox dependency
         # tor-browser # I don't tihink I need this
 
         gnomeExtensions.dock-from-dash

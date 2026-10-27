@@ -123,6 +123,11 @@ pkgs: with pkgs; {
   ];
 
   work = [
+    # intellij-idea
+    jdt-language-server
+    jetbrains.idea
+    typst
+    openjdk
     zoom-us
     texliveMedium
     texlab
