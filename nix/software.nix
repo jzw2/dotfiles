@@ -126,11 +126,14 @@ pkgs: with pkgs; {
     # intellij-idea
     jdt-language-server
     jetbrains.idea
+    pycharm
     typst
     openjdk
     zoom-us
     texliveMedium
     texlab
+    openfortivpn
+    libreoffice
   ];
 
   applications = [
